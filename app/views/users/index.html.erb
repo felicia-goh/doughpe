@@ -1,0 +1,14 @@
+<h1>All bakers</h1>
+
+<% @bakers.each do |baker| %>
+  <div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="https://www.biggerbolderbaking.com/wp-content/uploads/2018/03/No-Bake-Chocolate-Chip-Cookies1.jpg" alt="product image">
+    <div class="card-body">
+      <div class="card-title justify-content-between">
+        <p><% baker.name %></p>
+        <p></p>
+      </div>
+      <p class="card-text"><% baker.bio %></p>
+    </div>
+  </div>
+<% end %>
