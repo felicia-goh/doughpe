@@ -37,14 +37,15 @@ const updateQuantity = (event) => {
 const updateCheckoutForm = (event) => {
 
   const placeholder = document.querySelector('.product-name-placeholder');
-  const product = document.getElementById('order_quantity');
+  const product = document.getElementById('product');
   const quantity = document.getElementById('quantity_field');
   const total = document.getElementById('total');
+  const quantityHolder = document.getElementById('quantity_holder');
   // For now
   // Add an h3 with the name of the item at the top
   placeholder.innerText = `${event.currentTarget.dataset.productName}`;
-  product.insertAdjacentHTML('afterend', `<input name="order[product_id]" type="hidden" value="${event.currentTarget.dataset.productId}" />`)
-  quantity.insertAdjacentHTML('beforeend', `<input id="product_price" type="hidden" value="${event.currentTarget.dataset.productPrice}" />`)
+  product.innerHTML = `<input name="order[product_id]" type="hidden" value="${event.currentTarget.dataset.productId}" />`;
+  quantityHolder.innerHTML = `<input id="product_price" type="hidden" value="${event.currentTarget.dataset.productPrice}" />`;
   quantity.classList.remove('d-none');
   const q = document.getElementById('order_quantity');
   const calc = q.value * event.currentTarget.dataset.productPrice;

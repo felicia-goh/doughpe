@@ -38,6 +38,10 @@
         <div class="d-none" id="delivery_form">
           <%= f.input :delivery_address %>
         </div>
+        <div id="product">
+        </div>
+        <div id="quantity_holder">
+        </div>
         <%= simple_fields_for :slots do |slot| %>
           <%= slot.input :date, as: :date, start_year: Date.today.year,
                                           end_year: Date.today.year + 1,
