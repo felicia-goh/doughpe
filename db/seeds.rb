@@ -1,8 +1,5 @@
 User.destroy_all
 
-
-user_photo = URI.open('https://kitt.lewagon.com/placeholder/users/ssaunier')
-
 5.times do
   baker = User.create!(
     name: Faker::Name.name,
@@ -26,4 +23,6 @@ end
     address: Faker::Address.full_address,
     baker: false
   )
+  user_photo = URI.open('https://source.unsplash.com/random/400x400')
+  user.photo.attach(io: user_photo, filename: "#{user.username}.png", content_type: 'image/png')
 end
