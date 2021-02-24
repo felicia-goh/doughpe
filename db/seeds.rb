@@ -12,6 +12,13 @@ User.destroy_all
   )
   baker_photo = URI.open('https://source.unsplash.com/random/400x400')
   baker.photo.attach(io: baker_photo, filename: "#{baker.username}.png", content_type: 'image/png')
+
+  product = Product.create!(
+    name: "#{Faker::Dessert.flavor} #{Faker::Dessert.variety}",
+    price: rand * (5..10).to_a.sample,
+    description: Faker::Lorem.sentence,
+    user: baker
+    )
 end
 
 5.times do
