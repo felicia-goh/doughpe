@@ -5,6 +5,10 @@ test:
 cloudinary:
   service: Cloudinary
 
+local:    cloudinary:
+  service: Disk     service: Cloudinary
+  root: <%= Rails.root.join("storage") %>
+
 cloudinary:
   service: Cloudinary
 

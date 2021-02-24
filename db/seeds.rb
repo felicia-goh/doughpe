@@ -1,9 +1,5 @@
 User.destroy_all
 
-<<<<<<< HEAD
-User.create!(email: "baker@me.com", password:"testtest",baker:true, username:"baker")
-User.create!(email: "customer@me.com", password:"testtest",baker:false,username:"customer")
-=======
 5.times do
   baker = User.create!(
     name: Faker::Name.name,
@@ -37,4 +33,4 @@ end
   user_photo = URI.open('https://source.unsplash.com/random/400x400')
   user.photo.attach(io: user_photo, filename: "#{user.username}.png", content_type: 'image/png')
 end
->>>>>>> 749231897706b1f38fac635687a1d0775a4e8f20
+
