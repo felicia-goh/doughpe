@@ -1,2 +1,12 @@
-<h1>Products#new</h1>
-<p>Find me in app/views/products/new.html.erb</p>
+<div class="container my-3">
+  <h1>Add a new product</h1>
+</div>
+
+<div class="container">
+  <%= simple_form_for @product do |f| %>
+    <%= f.input :name %>
+    <%= f.input :price %>
+    <%= f.input :description %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
+  <% end %>
+</div>
