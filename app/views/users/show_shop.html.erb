@@ -1,36 +1,55 @@
 <div class="container">
   <div class="container d-flex">
     <div>
-      <h2><%= @baker.username %></h2>
-      <p><%= @baker.reviews.ratings.average%></p>
+      <h2><%= @baker.first.username %></h2>
+      <%
+=begin%>
+ <p><%= @baker.first.reviews.ratings.average%></p>
+<%
+=end%>
     </div>
-    <p><%= @baker.bio %>
+    <p><%= @baker.first.bio %>
   </div>
-  <div class="cards-container">
-    <%= @products.each do |product| %>
-      <div class="card" style="width: 18rem;">
-      <%= link_to new_order_path(@order) %>
-        <img class="card-img-top" src="https://www.biggerbolderbaking.com/wp-content/uploads/2018/03/No-Bake-Chocolate-Chip-Cookies1.jpg" alt="product image">
-        <div class="card-body">
-          <div class="card-title justify-content-between">
-            <p><%= product.name %></p>
-            <p>$<%= product.price %></p>
+  <div class="shop_container">
+    <div class="cards">
+      <% unless @products.empty? %>
+        <% @products.each do |product| %>
+          <div class="card" data-product-id="<%= product.id %>" data-product-name="<%= product.name %>" data-product-price="<%= product.price %>" >
+
+            <img class="card-img-top" src="https://www.biggerbolderbaking.com/wp-content/uploads/2018/03/No-Bake-Chocolate-Chip-Cookies1.jpg" alt="product image">
+            <div class="card-body">
+              <div class="card-title justify-content-between">
+                <p><%= product.name %></p>
+                <p>$<%= product.price %></p>
+              </div>
+              <p class="card-text"><%= product.description %></p>
+            </div>
           </div>
-          <p class="card-text"><%= product.description %>></p>
-        </div>
-      </div>
-    <% end %>
-  </div>
-  <div>
-    <%= form_for [@user, @order] ,  do |f| %>
-      <%= f.input :quantity %>
-      <%= f.input :delivery_method, as: :radio_buttons %>
-      <%= f.input :delivery_address %>
-      <%= simple_fields_for :slots do |slot| %>
-        <%= slot.input :date %>
-        <%= slot.input :time_period, as: :radio_buttons %>
+        <% end %>
       <% end %>
-      <p>Total: <%=  %>
-    <% end %>
+    </div>
+    <div>
+      <%= simple_form_for @order do |f| %>
+        <h3 class="product-name-placeholder"></h3>
+        <div class="d-none" id="quantity_field">
+          <%= f.input :quantity, input_html: { value: '1' } %>
+        </div>
+        <%= f.input :delivery_method, collection: %w[self-collection delivery], as: :radio_buttons %>
+        <div class="d-none" id="delivery_form">
+          <%= f.input :delivery_address %>
+        </div>
+        <%= simple_fields_for :slots do |slot| %>
+          <%= slot.input :date, as: :date, start_year: Date.today.year,
+                                          end_year: Date.today.year + 1,
+                                          order: [:day, :month, :year] %>
+          <%= slot.input :time_period, collection: %w[morning afternoon evening], as: :radio_buttons %>
+        <% end %>
+
+        <p>Total: $<span id="total">0.00</span></p>
+        <%= f.submit 'Order Now!' %>
+      <% end %>
+
+    </div>
   </div>
 </div>
+
