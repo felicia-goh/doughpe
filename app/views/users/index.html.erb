@@ -1,0 +1,23 @@
+<div class="container my-3">
+  <h1>All bakers</h1>
+</div>
+
+<div class="container">
+  <div class="cards">
+    <% @bakers.each do |baker| %>
+      <div class="card" style="width: 18rem;">
+        <% if baker.photo.attached? %>
+          <%= cl_image_tag baker.photo.key, height: 300, width: 300, crop: :fill, class: "card-img-top" %>
+        <% else %>
+         <img class="card-img-top" src="https://www.biggerbolderbaking.com/wp-content/uploads/2018/03/No-Bake-Chocolate-Chip-Cookies1.jpg" alt="product image">
+        <% end %>
+        <div class="card-body">
+          <div class="card-title">
+            <%= baker.username %>
+          </div>
+          <p class="card-text"><% baker.bio %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
