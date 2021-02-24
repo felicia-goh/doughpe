@@ -7,6 +7,6 @@ class User < ApplicationRecord
   has_many :slots, through: :products
   has_many :orders, through: :slots
   has_many :reviews, through: :orders
-  validates :name, presence: true
   validates :username, presence: true, uniqueness: true
+  has_one_attached :photo
 end
