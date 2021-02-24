@@ -6,7 +6,11 @@
   <div class="cards">
     <% @bakers.each do |baker| %>
       <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="https://www.biggerbolderbaking.com/wp-content/uploads/2018/03/No-Bake-Chocolate-Chip-Cookies1.jpg" alt="product image">
+        <% if baker.photo.attached? %>
+          <%= cl_image_tag baker.photo.key, height: 300, width: 300, crop: :fill, class: "card-img-top" %>
+        <% else %>
+         <img class="card-img-top" src="https://www.biggerbolderbaking.com/wp-content/uploads/2018/03/No-Bake-Chocolate-Chip-Cookies1.jpg" alt="product image">
+        <% end %>
         <div class="card-body">
           <div class="card-title">
             <%= baker.username %>
