@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
 
+  def index
+    @bakers = User.where(baker: true)
+  end
+
   def edit
     @user = current_user
   end
@@ -17,5 +21,6 @@ class UsersController < ApplicationController
 
   def strong_edit_params
     params.require(:user).permit(:name, :bio, :address, :photo)
-  end
+
+
 end
