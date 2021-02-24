@@ -19,6 +19,8 @@ User.destroy_all
     description: Faker::Lorem.sentence,
     user: baker
     )
+  product_photo = URI.open('https://source.unsplash.com/400x400/?bake')
+  product.photo.attach(io: product_photo, filename: "#{product.name}.png", content_type: 'image/png')
 end
 
 5.times do

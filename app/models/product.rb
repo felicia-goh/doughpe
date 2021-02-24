@@ -3,4 +3,5 @@ class Product < ApplicationRecord
   has_many :slots, dependent: :destroy
   validates :name, presence: true
   validates :price, presence: true
+  has_one_attached :photo
 end
