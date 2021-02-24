@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="container d-flex">
+    <div>
+      <h2><%= @baker.username %></h2>
+      <p><%= @baker.reviews.ratings.average%></p>
+    </div>
+    <p><%= @baker.bio %>
+  </div>
+  <div class="cards-container">
+    <%= @products.each do |product| %>
+      <div class="card" style="width: 18rem;">
+      <%= link_to new_order_path(@order) %>
+        <img class="card-img-top" src="https://www.biggerbolderbaking.com/wp-content/uploads/2018/03/No-Bake-Chocolate-Chip-Cookies1.jpg" alt="product image">
+        <div class="card-body">
+          <div class="card-title justify-content-between">
+            <p><%= product.name %></p>
+            <p>$<%= product.price %></p>
+          </div>
+          <p class="card-text"><%= product.description %>></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div>
+    <%= form_for [@user, @order] ,  do |f| %>
+      <%= f.input :quantity %>
+      <%= f.input :delivery_method, as: :radio_buttons %>
+      <%= f.input :delivery_address %>
+      <%= simple_fields_for :slots do |slot| %>
+        <%= slot.input :date %>
+        <%= slot.input :time_period, as: :radio_buttons %>
+      <% end %>
+      <p>Total: <%=  %>
+    <% end %>
+  </div>
+</div>
