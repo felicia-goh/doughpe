@@ -21,6 +21,13 @@ User.destroy_all
     )
   product_photo = URI.open('https://source.unsplash.com/400x400/?bake')
   product.photo.attach(io: product_photo, filename: "#{product.name}.png", content_type: 'image/png')
+
+  Slot.create!(
+    date: Date.today,
+    available_quantity: (1..10).to_a.sample,
+    time_period: 'unselected',
+    product: product
+    )
 end
 
 5.times do
