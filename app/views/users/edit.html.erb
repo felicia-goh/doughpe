@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row gutters-sm mt-3">
+    <div class="col-md-4 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex flex-column align-items-center text-center">
+           <% if @user.photo.attached? %>
+             <%= cl_image_tag @user.photo.key%>
+           <% else %>
+             <i class="fas fa-user-circle fa-10x"></i>
+           <% end %>
+           <div class="mt-3">
+            <h4><%=  @user.username%></h4>
+            <% if @user.baker %>
+              <p class="text-secondary mb-1">I want to share my bakes!</p>
+            <% else %>
+              <p class="text-secondary mb-1">I want some yummy bakes!</p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="card mb-3">
+      <div class="card-body">
+        <%= simple_form_for @user do |f| %>
+          <%= f.input :name %>
+          <%= f.input :bio %>
+          <%= f.input :address %>
+          <%= f.input :photo, as: :file, label: false, class: 'btn btn-mini btn-success hidden'%>
+          <%= f.submit "Update profile", class: "btn btn-primary btn-block" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>

@@ -35,3 +35,4 @@ end
   user_photo = URI.open('https://source.unsplash.com/random/400x400')
   user.photo.attach(io: user_photo, filename: "#{user.username}.png", content_type: 'image/png')
 end
+
