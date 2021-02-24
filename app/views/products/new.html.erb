@@ -7,6 +7,10 @@
     <%= f.input :name %>
     <%= f.input :price %>
     <%= f.input :description %>
+
+    <%= simple_fields_for :slot do |s| %>
+     <%= s.input :available_quantity %>
+    <% end %>
     <%= f.button :submit, class: 'btn btn-primary' %>
   <% end %>
 </div>
