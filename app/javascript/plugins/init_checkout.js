@@ -28,7 +28,9 @@ const updateDelivery = (event) => {
 const updateQuantity = (event) => {
   const q = document.getElementById('order_quantity');
   const total = document.getElementById('total');
-  const calc = q.value * 1 ;
+  const price = document.getElementById('product_price');
+  const calc = q.value * price.value ;
+  total.innerText = calc;
 
 }
 
@@ -37,12 +39,18 @@ const updateCheckoutForm = (event) => {
   const placeholder = document.querySelector('.product-name-placeholder');
   const product = document.getElementById('order_quantity');
   const quantity = document.getElementById('quantity_field');
+  const total = document.getElementById('total');
   // For now
   // Add an h3 with the name of the item at the top
   placeholder.innerText = `${event.currentTarget.dataset.productName}`;
   product.insertAdjacentHTML('afterend', `<input name="order[product_id]" type="hidden" value="${event.currentTarget.dataset.productId}" />`)
   quantity.insertAdjacentHTML('beforeend', `<input id="product_price" type="hidden" value="${event.currentTarget.dataset.productPrice}" />`)
   quantity.classList.remove('d-none');
+  const q = document.getElementById('order_quantity');
+  const calc = q.value * event.currentTarget.dataset.productPrice;
+  total.innerText = calc ;
+
+
 
 }
   // If I am in the show page
