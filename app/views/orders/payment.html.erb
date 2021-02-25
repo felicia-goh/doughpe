@@ -1,0 +1,18 @@
+  <body class="body">
+  <div class="container">
+    <div class="card-payment mt-3 text-align-center">
+      <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto">
+        <i class="checkmark">✓</i>
+      </div>
+      <h1 class="h1">Success</h1>
+      <ul class="list-group">
+        <li class="list-group-item">Name: <%= user.name %></li>
+        <li class="list-group-item">Delivery address: <%= order.delivery_address %></li>
+        <li class="list-group-item">Delivery method: <%= order.delivery_method %></li>
+        <li class="list-group-item">Time slot: <%=slot.time_period %></li>
+      </ul>
+    </div>
+  </div>
+</body>
+
+
