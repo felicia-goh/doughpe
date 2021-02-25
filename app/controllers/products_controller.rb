@@ -60,7 +60,7 @@ class ProductsController < ApplicationController
   private
 
   def strong_params
-    params.require(:product).permit(:name, :price, :description)
+    params.require(:product).permit(:name, :price, :description, :photo)
   end
 
   def strong_params_slots
