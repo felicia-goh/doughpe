@@ -35,8 +35,12 @@
       <%= simple_form_for @order do |f| %>
         <h3 class="product-name-placeholder">Select an item!</h3>
         <div class="d-none" id="checkout">
+          <%= f.association :slots do |slot| %>
+            <%= slot.input :id, label: 'Date:', as: :select, collection: [] %>
+            <%= slot.input :time_period, collection: %w[morning afternoon evening], as: :radio_buttons %>
+          <% end %>
           <div class="d-none" id="quantity_field">
-            <%= f.input :quantity, input_html: { value: '1' } %>
+            <%= f.input :quantity, as: :select, collection: [] %>
           </div>
           <%= f.input :delivery_method, collection: %w[self-collection delivery], as: :radio_buttons %>
           <div class="d-none" id="delivery_form">
@@ -46,10 +50,6 @@
           </div>
           <div id="quantity_holder">
           </div>
-          <%= f.association :slots do |slot| %>
-            <%= slot.input :id, label: 'Date:', as: :select, collection: [] %>
-            <%= slot.input :time_period, collection: %w[morning afternoon evening], as: :radio_buttons %>
-          <% end %>
         </div>
 
         <p>Total: $<span id="total">0.00</span></p>

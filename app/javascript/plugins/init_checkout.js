@@ -15,6 +15,19 @@ const initCheckout = () => {
   const delivery = document.getElementById('order_delivery_method_delivery')
   delivery.addEventListener('click', updateDelivery)
 
+  const slots = document.getElementById('order_slots_id');
+  slots.addEventListener('change', updateSlotQuantity);
+
+}
+
+const updateSlotQuantity = (event) => {
+  const quantityField = document.getElementById('order_quantity');
+  const quantity = event.currentTarget.innerText.slice(-1);
+  let options = ``;
+  for (let i = 1; i < (parseInt(quantity) + 1); i++ ) {
+    options = options.concat(`<option value="${i}">${i}</option>`);
+  }
+  quantityField.innerHTML = options;
 }
 
 const updateSelfCollection = (event) => {
