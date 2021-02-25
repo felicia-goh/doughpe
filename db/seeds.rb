@@ -1,4 +1,7 @@
 User.destroy_all
+Product.destroy_all
+Order.destroy_all
+Slot.destroy_all
 
 5.times do
   user = User.create!(
@@ -44,7 +47,7 @@ end
 
   qty = (1..3).to_a.sample
   status = %w[paid delivered reviewed].sample
-  user = User.last
+  user = User.where(baker: false).sample
   order = Order.create!(
     user: user,
     slot: slot,
@@ -62,4 +65,3 @@ end
     order: order
     )
 end
-
