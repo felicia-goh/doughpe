@@ -8,5 +8,5 @@ Rails.application.routes.draw do
   get '/sales', to: 'orders#sales'
   resources :products, only: [:new, :create, :edit, :update]
   resources :users, only:[:edit, :update]
-  resources :orders, only: [:index]
+  resources :orders, only: [:index, :new, :edit, :update]
 end

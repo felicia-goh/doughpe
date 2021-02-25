@@ -1,0 +1,10 @@
+<div class="container">
+ <%= simple_form_for @order do |f| %>
+ <%= f.input :delivery_method %>
+ <%= f.input :delivery_address %>
+ <%= f.input :quantity %>
+
+ <%= f.submit "Create", class: "btn btn-primary btn-block" %>
+ <% end %>
+
+</div>

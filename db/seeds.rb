@@ -1,4 +1,7 @@
 User.destroy_all
+Product.destroy_all
+Order.destroy_all
+Slot.destroy_all
 
 5.times do
   user = User.create!(
@@ -62,4 +65,3 @@ end
     order: order
     )
 end
-
