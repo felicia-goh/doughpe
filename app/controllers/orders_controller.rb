@@ -51,4 +51,5 @@ class OrdersController < ApplicationController
 
   def strong_order_params
     params.require(:order).permit(:delivery_method, :delivery_address, :quantity, :slot)
+  end
 end
