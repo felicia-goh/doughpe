@@ -1,4 +1,8 @@
 class OrdersController < ApplicationController
+  def index
+    @orders = Order.where(user: current_user)
+  end
+
   def new
     @user = current_user
     @order = Order.create(order_params)
@@ -15,7 +19,11 @@ class OrdersController < ApplicationController
     else
       render 'user/show_shop'
     end
+  end
 
+  def sales
+    @user = current_user
+    @orders = @user.orders
   end
 
   private
