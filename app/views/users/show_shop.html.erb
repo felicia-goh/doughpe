@@ -17,7 +17,7 @@
 
           <div class="card" data-product-id="<%= product.id %>" data-product-name="<%= product.name %>" data-product-price="<%= product.price %>" data-slots="<%= @products_hash[product.id].to_json %>" >
 
-            <img class="card-img-top" src="https://www.biggerbolderbaking.com/wp-content/uploads/2018/03/No-Bake-Chocolate-Chip-Cookies1.jpg" alt="product image">
+            <%= cl_image_tag product.photo.key, class: "card-img-top" %>
             <div class="card-body">
               <div class="card-title justify-content-between">
                 <p><%= product.name %></p>
