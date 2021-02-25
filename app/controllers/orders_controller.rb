@@ -1,6 +1,9 @@
 class OrdersController < ApplicationController
+  def index
+    @orders = Order.where(user: current_user)
+  end
 
-   def new
+  def new
     @user = current_user
     @order = Order.create(order_params)
     @order.user = @user
@@ -17,6 +20,10 @@ class OrdersController < ApplicationController
       render 'user/show_shop'
     end
   end
+
+  def sales
+    @user = current_user
+    @orders = @user.orders
 
   def edit
     @order = Order.find(params[:id])
