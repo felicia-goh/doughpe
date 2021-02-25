@@ -28,7 +28,7 @@
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
           <%= link_to "Profile", edit_user_path(current_user), class: "dropdown-item" %>
           <% unless current_user.baker%>
-          <%= link_to "Add to cart", new_order_path, class: "dropdown-item" %>
+          <%= link_to "Add to cart", edit_order_path(session[:order_id]), class: "dropdown-item" %>
           <%  unless session[:order_id].nil? %>
           <%= link_to "Checkout", edit_order_path(session[:order_id]), class: "dropdown-item" %>
           <%= link_to "View order", "#", class: "dropdown-item" %>
