@@ -54,5 +54,12 @@ end
     quantity: qty,
     total: slot.product.price * qty
     )
+
+  rating = (0..5).to_a.sample
+  Review.create!(
+    rating: rating,
+    content: Faker::Lorem.sentence,
+    order: order
+    )
 end
 
