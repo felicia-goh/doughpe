@@ -1,14 +1,14 @@
 <div class="container">
   <div class="container d-flex">
     <div>
-      <h2><%= @baker.first.username %></h2>
+      <h2><%= @baker.username %></h2>
       <%
 =begin%>
- <p><%= @baker.first.reviews.ratings.average%></p>
+ <p><%= @baker.reviews.ratings.average%></p>
 <%
 =end%>
     </div>
-    <p><%= @baker.first.bio %>
+    <p><%= @baker.bio %>
   </div>
   <div class="shop_container">
     <div class="cards">

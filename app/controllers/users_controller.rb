@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   end
 
   def show_shop
-    @baker = User.where(username: params[:name])
+    @baker = User.find_by(username: params[:name])
     @products = Product.where(user: @baker)
     @products_hash = {}
     @products.each do |product|
