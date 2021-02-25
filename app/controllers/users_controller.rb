@@ -6,6 +6,18 @@ class UsersController < ApplicationController
   def show_shop
     @baker = User.where(username: params[:name])
     @products = Product.where(user: @baker)
+    @products_hash = {}
+    @products.each do |product|
+      @products_hash[product.id] =
+        product.slots.map do |slot|
+          {
+            available_quantity: slot.available_quantity,
+            date: slot.date,
+            id: slot.id
+          }
+        end
+    end
+
     @order = Order.new
     @user = current_user
   end

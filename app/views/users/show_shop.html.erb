@@ -14,13 +14,14 @@
     <div class="cards">
       <% unless @products.empty? %>
         <% @products.each do |product| %>
-          <div class="card" data-product-id="<%= product.id %>" data-product-name="<%= product.name %>" data-product-price="<%= product.price %>" >
+
+          <div class="card" data-product-id="<%= product.id %>" data-product-name="<%= product.name %>" data-product-price="<%= product.price %>" data-slots="<%= @products_hash[product.id].to_json %>" >
 
             <img class="card-img-top" src="https://www.biggerbolderbaking.com/wp-content/uploads/2018/03/No-Bake-Chocolate-Chip-Cookies1.jpg" alt="product image">
             <div class="card-body">
               <div class="card-title justify-content-between">
                 <p><%= product.name %></p>
-                <p>$<%= product.price %></p>
+                <p>$<%= number_with_precision(product.price, precision: 2) %></p>
               </div>
               <p class="card-text"><%= product.description %></p>
             </div>
@@ -42,10 +43,8 @@
         </div>
         <div id="quantity_holder">
         </div>
-        <%= simple_fields_for :slots do |slot| %>
-          <%= slot.input :date, as: :date, start_year: Date.today.year,
-                                          end_year: Date.today.year + 1,
-                                          order: [:day, :month, :year] %>
+        <%= f.association :slots do |slot| %>
+          <%= slot.input :id, label: 'Date:', as: :select, collection: [] %>
           <%= slot.input :time_period, collection: %w[morning afternoon evening], as: :radio_buttons %>
         <% end %>
 

@@ -3,9 +3,18 @@ class OrdersController < ApplicationController
     @user = current_user
     @order = Order.create(order_params)
     @order.user = @user
-    @product = Product.find(params.require(:order).permit(:product_id)[:product_id].to_i)
-    # @order.product = @product
-    raise
+    @product = Product.find(params.require(:order).permit(:product_id)[:product_id])
+    @order.delivery_address = "self-collection" if @order.delivery_method == "self-collection"
+
+    slot = Slot.find(params.require(:order).permit(slots: {})[:slots][:id])
+    @order.slot = slot
+    @order.slot.time_period = params.require(:order).permit(slots: {})[:slots][:time_period]
+    if @order.save
+      redirect_to edit_order_path
+    else
+      render 'user/show_shop'
+    end
+
   end
 
   private

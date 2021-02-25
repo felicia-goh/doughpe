@@ -18,6 +18,7 @@ const initCheckout = () => {
 const updateSelfCollection = (event) => {
   const delivery = document.getElementById('delivery_form')
   delivery.classList.add('d-none');
+  // delivery.insertAdjacentHTML('beforeend', '<input name="order[delivery_address]" type="hidden" value="self-collection" />')
 }
 
 const updateDelivery = (event) => {
@@ -41,15 +42,23 @@ const updateCheckoutForm = (event) => {
   const quantity = document.getElementById('quantity_field');
   const total = document.getElementById('total');
   const quantityHolder = document.getElementById('quantity_holder');
+  const q = document.getElementById('order_quantity');
+  const calc = q.value * event.currentTarget.dataset.productPrice;
   // For now
   // Add an h3 with the name of the item at the top
   placeholder.innerText = `${event.currentTarget.dataset.productName}`;
   product.innerHTML = `<input name="order[product_id]" type="hidden" value="${event.currentTarget.dataset.productId}" />`;
   quantityHolder.innerHTML = `<input id="product_price" type="hidden" value="${event.currentTarget.dataset.productPrice}" />`;
   quantity.classList.remove('d-none');
-  const q = document.getElementById('order_quantity');
-  const calc = q.value * event.currentTarget.dataset.productPrice;
-  total.innerText = calc ;
+  total.innerText = calc.toFixed(2) ;
+
+  const slots_list = document.getElementById('order_slots_id');
+  const slot_data = JSON.parse(event.currentTarget.dataset.slots);
+  console.dir(slot_data[0].date);
+  // console.log(slots_list);
+  // slot_data.forEach(slot => slots_list.insertAdjacentHTML('beforeend', `<option value="${slot.id}>${slot.date} Available: ${slot.available_quantity}</option>`));
+  slots_list.insertAdjacentHTML('beforeend', `<option value="${slot_data[0].id}">${slot_data[0].date} Available: ${slot_data[0].available_quantity}</option>`);
+
 
 
 
