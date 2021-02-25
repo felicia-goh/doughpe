@@ -15,20 +15,18 @@
 
 <div class="container mt-3">
   <h2>Featured bakers</h2>
-  <div class="scrollmenu mb-3">
+  <div class="scrollmenu mb-3 d-flex">
     <% @bakers.each do |baker| %>
-      <div class="card m-3">
-        <%= link_to baker_path(baker.username) do %>
+      <%= link_to baker_path(baker.username) do %>
+        <div class="avatar-container">
           <% if baker.photo.attached? %>
-            <%= cl_image_tag baker.photo.key, height: 150, width: 200, crop: :fill, class: "card-img-top" %>
+            <%= cl_image_tag baker.photo.key, height: 150, width: 200, crop: :fill, class: "avatar-bordered-huge m-3" %>
           <% else %>
-            <img class="card-img-top" src="https://source.unsplash.com/400x400/?bake" alt="product image">
+            <img class="avatar-bordered-huge m-3" src="https://source.unsplash.com/400x400/?bake" alt="product image">
           <% end %>
-          <div class="card-body">
-            <div class="card-title"><%= baker.username %></div>
-          </div>
-        <% end %>
-      </div>
+          <h6><%= baker.username %></h6>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>
