@@ -7,5 +7,4 @@ Rails.application.routes.draw do
   post '/orders', to: 'orders#new'
   resources :products, only: [:new, :create, :edit, :update]
   resources :users, only:[:edit, :update]
-  get '/orders/:order_id/track', to: 'orders#track'
 end
