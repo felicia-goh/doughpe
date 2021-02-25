@@ -18,14 +18,16 @@
   <div class="scrollmenu mb-3">
     <% @bakers.each do |baker| %>
       <div class="card m-3">
-        <% if baker.photo.attached? %>
-          <%= cl_image_tag baker.photo.key, height: 150, width: 200, crop: :fill, class: "card-img-top" %>
-        <% else %>
-          <img class="card-img-top" src="https://source.unsplash.com/400x400/?bake" alt="product image">
+        <%= link_to baker_path(baker.username) do %>
+          <% if baker.photo.attached? %>
+            <%= cl_image_tag baker.photo.key, height: 150, width: 200, crop: :fill, class: "card-img-top" %>
+          <% else %>
+            <img class="card-img-top" src="https://source.unsplash.com/400x400/?bake" alt="product image">
+          <% end %>
+          <div class="card-body">
+            <div class="card-title"><%= baker.username %></div>
+          </div>
         <% end %>
-        <div class="card-body">
-          <div class="card-title"><%= baker.username %></div>
-        </div>
       </div>
     <% end %>
   </div>
@@ -36,14 +38,16 @@
   <div class="scrollmenu mb-3">
     <% @products.each do |product| %>
       <div class="card m-3">
-        <% if product.photo.attached? %>
-          <%= cl_image_tag product.photo.key, height: 150, width: 200, crop: :fill, class: "card-img-top" %>
-        <% else %>
-          <img class="card-img-top" src="https://www.biggerbolderbaking.com/wp-content/uploads/2018/03/No-Bake-Chocolate-Chip-Cookies1.jpg" alt="product image">
+        <%= link_to baker_path(product.user.username) do %>
+          <% if product.photo.attached? %>
+            <%= cl_image_tag product.photo.key, height: 150, width: 200, crop: :fill, class: "card-img-top" %>
+          <% else %>
+            <img class="card-img-top" src="https://www.biggerbolderbaking.com/wp-content/uploads/2018/03/No-Bake-Chocolate-Chip-Cookies1.jpg" alt="product image">
+          <% end %>
+          <div class="card-body">
+            <div class="card-title"><%= product.name %></div>
+          </div>
         <% end %>
-        <div class="card-body">
-          <div class="card-title"><%= product.name %></div>
-        </div>
       </div>
     <% end %>
   </div>
