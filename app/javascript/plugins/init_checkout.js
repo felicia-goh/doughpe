@@ -54,10 +54,12 @@ const updateCheckoutForm = (event) => {
 
   const slots_list = document.getElementById('order_slots_id');
   const slot_data = JSON.parse(event.currentTarget.dataset.slots);
-  console.dir(slot_data[0].date);
   // console.log(slots_list);
   // slot_data.forEach(slot => slots_list.insertAdjacentHTML('beforeend', `<option value="${slot.id}>${slot.date} Available: ${slot.available_quantity}</option>`));
-  slots_list.insertAdjacentHTML('beforeend', `<option value="${slot_data[0].id}">${slot_data[0].date} Available: ${slot_data[0].available_quantity}</option>`);
+  let options = `<option value></option>`;
+  slot_data.forEach(slot => options = options.concat(`<option value="${slot.id}">${slot.date} Available: ${slot.available_quantity}</option>`));
+  console.log(options);
+  slots_list.innerHTML = options;
 
 
 
