@@ -23,7 +23,4 @@ class OrdersController < ApplicationController
   def order_params
     params.require(:order).permit(:quantity, :delivery_method, :delivery_address)
   end
-
-  def slot_params
-  end
 end
