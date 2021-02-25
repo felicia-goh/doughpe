@@ -1,6 +1,10 @@
 <div class="container my-3">
   <div class="user-header p-3 my-3 d-flex align-items-center">
-    <%= cl_image_tag @baker.photo.key, height: 150, width: 150, crop: :fill, class: "rounded-circle mr-3"%>
+    <% if @baker.photo.attached? %>
+      <%= cl_image_tag @baker.photo.key, height: 150, width: 150, crop: :fill, class: "rounded-circle mr-3"%>
+    <% else %>
+      <i class="fas fa-user-circle fa-10x"></i>
+    <% end %>
     <div class="ml-3">
       <h2><%= @baker.username %></h2>
       <h6><%= @baker.bio %></h6>
@@ -29,6 +33,16 @@
             <% end %>
           </div>
         <% end %>
+      <% end %>
+      <%= link_to new_product_path do  %>
+      <div class="card" style="text-align:center">
+        <i class="fas fa-plus fa-10x m-3"></i>
+          <div class="card-body">
+            <div class="card-title">
+              <p>Add a new product</p>
+            </div>
+          </div>
+      </div>
       <% end %>
     </div>
     <div>
