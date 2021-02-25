@@ -17,7 +17,7 @@ class ProductsController < ApplicationController
         @slot.time_period = 'unselected'
         @slot.save
       end
-      redirect_to root_path
+      redirect_to baker_path(current_user.username)
     else
       render :new
     end
