@@ -6,28 +6,23 @@
 .card {
     position: relative;
     display: flex;
-    flex-direction: column;
     min-width: 0;
     word-wrap: break-word;
     background-color: #fff;
     background-clip: border-box;
     border: 0 solid rgba(0,0,0,.125);
     border-radius: .25rem;
+
 }
 
 .card-body {
-    flex: 1 1 auto;
     min-height: 1px;
     padding: 1rem;
 }
 
-.gutters-sm {
-    margin-right: -8px;
-    margin-left: -8px;
-}
 
-.gutters-sm>.col, .gutters-sm>[class*=col-] {
-    padding-right: 8px;
-    padding-left: 8px;
+.avatar-img {
+  border: 0.3rem solid rgba(#fff, 0.3);
+  max-width: 200px;
+  border-radius: 16px;
 }
-
