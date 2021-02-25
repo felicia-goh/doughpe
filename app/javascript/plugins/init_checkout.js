@@ -1,5 +1,7 @@
 
 const initCheckout = () => {
+
+  document.querySelector('.disabled').disabled = true;
   const cards = document.querySelectorAll('.card');
   cards.forEach((card) => {
     card.addEventListener('click', updateCheckoutForm)
@@ -31,50 +33,39 @@ const updateQuantity = (event) => {
   const total = document.getElementById('total');
   const price = document.getElementById('product_price');
   const calc = q.value * price.value ;
-  total.innerText = calc;
+  total.innerText = calc.toFixed(2);
 
 }
 
 const updateCheckoutForm = (event) => {
 
   const placeholder = document.querySelector('.product-name-placeholder');
-  const product = document.getElementById('product');
-  const quantity = document.getElementById('quantity_field');
-  const total = document.getElementById('total');
-  const quantityHolder = document.getElementById('quantity_holder');
-  const q = document.getElementById('order_quantity');
-  const calc = q.value * event.currentTarget.dataset.productPrice;
-  // For now
-  // Add an h3 with the name of the item at the top
   placeholder.innerText = `${event.currentTarget.dataset.productName}`;
+
+  const product = document.getElementById('product');
   product.innerHTML = `<input name="order[product_id]" type="hidden" value="${event.currentTarget.dataset.productId}" />`;
+
+  const quantity = document.getElementById('quantity_field');
+  const quantityHolder = document.getElementById('quantity_holder');
   quantityHolder.innerHTML = `<input id="product_price" type="hidden" value="${event.currentTarget.dataset.productPrice}" />`;
   quantity.classList.remove('d-none');
+
+  const q = document.getElementById('order_quantity');
+  const calc = q.value * event.currentTarget.dataset.productPrice;
+  const total = document.getElementById('total');
   total.innerText = calc.toFixed(2) ;
 
   const slots_list = document.getElementById('order_slots_id');
   const slot_data = JSON.parse(event.currentTarget.dataset.slots);
-  console.dir(slot_data[0].date);
-  // console.log(slots_list);
-  // slot_data.forEach(slot => slots_list.insertAdjacentHTML('beforeend', `<option value="${slot.id}>${slot.date} Available: ${slot.available_quantity}</option>`));
-  slots_list.insertAdjacentHTML('beforeend', `<option value="${slot_data[0].id}">${slot_data[0].date} Available: ${slot_data[0].available_quantity}</option>`);
+  let options = `<option value></option>`;
+  slot_data.forEach(slot => options = options.concat(`<option value="${slot.id}">${slot.date} Available: ${slot.available_quantity}</option>`));
+  slots_list.innerHTML = options;
 
-
+  document.getElementById('checkout').classList.remove('d-none');
+  document.querySelector('.disabled').disabled = false;
+  document.querySelector('.disabled').value = 'Order now!';
 
 
 }
-  // If I am in the show page
-  // Start the logic!
-
-  // Whenever the user clicks on checkout
-  // Send a form and render it fresh in the html
-
-  // Whenever the user clicks on the delivery radio button
-  // Modify the form
-
-  // Whenever the user clicks on the pickup radio button
-  // Restore the form
-
-
 
 export { initCheckout }

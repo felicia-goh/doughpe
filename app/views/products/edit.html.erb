@@ -1,18 +1,18 @@
 <div class="container my-3">
-  <h1>Add a new product</h1>
+  <h1>Edit <%= @product.name %></h1>
 </div>
 
 <div class="container">
+  <%= cl_image_tag @product.photo.key %>
   <%= simple_form_for @product do |f| %>
     <%= f.input :name %>
     <%= f.input :price %>
     <%= f.input :description %>
-    <%= f.input :photo, as: :file %>
 
     <%= simple_fields_for :slot do |s| %>
      <%= s.input :available_quantity %>
      <%= s.input :date, as: :check_boxes, collection:[Date.today+1, Date.today+2, Date.today+3] %>
     <% end %>
-    <%= f.button :submit, class: 'btn btn-primary' %>
+    <%= f.submit 'Update product', class: 'btn btn-primary', method: :patch %>
   <% end %>
 </div>

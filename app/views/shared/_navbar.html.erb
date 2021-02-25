@@ -27,16 +27,18 @@
         <% end %>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
           <%= link_to "Profile", edit_user_path(current_user), class: "dropdown-item" %>
-          <% unless current_user.baker%>
-          <%= link_to "Add to cart", edit_order_path(session[:order_id]), class: "dropdown-item" %>
+
+
+
           <%  unless session[:order_id].nil? %>
           <%= link_to "Checkout", edit_order_path(session[:order_id]), class: "dropdown-item" %>
-          <%= link_to "View order", "#", class: "dropdown-item" %>
+          <%= link_to "View order", '#', class: "dropdown-item" %>
           <% end %>
-          <% else %>
-            <%= link_to "Add a product", "#", class: "dropdown-item" %>
-            <%= link_to "See all orders", "#", class: "dropdown-item" %>
-          <% end %>
+
+            <%= link_to "Add a product", new_product_path, class: "dropdown-item" %>
+            <%= link_to "See all orders", orders_path, class: "dropdown-item" %>
+            <%= link_to "See all sales", sales_path, class: "dropdown-item" %>
+
         </div>
       </li>
       <% else %>

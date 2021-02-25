@@ -1,14 +1,10 @@
 <div class="container">
-  <div class="container d-flex">
+  <div class="container d-flex align-middle">
     <div>
+      <%= cl_image_tag @baker.photo.key, height: 150, width: 150, crop: :fill, class: "rounded-circle"%>
       <h2><%= @baker.username %></h2>
-      <%
-=begin%>
- <p><%= @baker.reviews.ratings.average%></p>
-<%
-=end%>
     </div>
-    <p><%= @baker.bio %>
+    <p><%= @baker.bio %></p>
   </div>
   <div class="shop_container">
     <div class="cards">
@@ -17,7 +13,7 @@
 
           <div class="card" data-product-id="<%= product.id %>" data-product-name="<%= product.name %>" data-product-price="<%= product.price %>" data-slots="<%= @products_hash[product.id].to_json %>" >
 
-            <img class="card-img-top" src="https://www.biggerbolderbaking.com/wp-content/uploads/2018/03/No-Bake-Chocolate-Chip-Cookies1.jpg" alt="product image">
+            <%= cl_image_tag product.photo.key, class: "card-img-top" %>
             <div class="card-body">
               <div class="card-title justify-content-between">
                 <p><%= product.name %></p>
@@ -25,31 +21,39 @@
               </div>
               <p class="card-text"><%= product.description %></p>
             </div>
+            <% if @baker == current_user%>
+              <div class="d-flex justify-content-between p-3">
+                <%= link_to "Edit", edit_product_path(product), class: "btn btn-warning" %>
+                <%= link_to "Delete", product_path(product), method: :delete, class: "btn btn-danger" %>
+              </div>
+            <% end %>
           </div>
         <% end %>
       <% end %>
     </div>
     <div>
       <%= simple_form_for @order do |f| %>
-        <h3 class="product-name-placeholder"></h3>
-        <div class="d-none" id="quantity_field">
-          <%= f.input :quantity, input_html: { value: '1' } %>
+        <h3 class="product-name-placeholder">Select an item!</h3>
+        <div class="d-none" id="checkout">
+          <div class="d-none" id="quantity_field">
+            <%= f.input :quantity, input_html: { value: '1' } %>
+          </div>
+          <%= f.input :delivery_method, collection: %w[self-collection delivery], as: :radio_buttons %>
+          <div class="d-none" id="delivery_form">
+            <%= f.input :delivery_address %>
+          </div>
+          <div id="product">
+          </div>
+          <div id="quantity_holder">
+          </div>
+          <%= f.association :slots do |slot| %>
+            <%= slot.input :id, label: 'Date:', as: :select, collection: [] %>
+            <%= slot.input :time_period, collection: %w[morning afternoon evening], as: :radio_buttons %>
+          <% end %>
         </div>
-        <%= f.input :delivery_method, collection: %w[self-collection delivery], as: :radio_buttons %>
-        <div class="d-none" id="delivery_form">
-          <%= f.input :delivery_address %>
-        </div>
-        <div id="product">
-        </div>
-        <div id="quantity_holder">
-        </div>
-        <%= f.association :slots do |slot| %>
-          <%= slot.input :id, label: 'Date:', as: :select, collection: [] %>
-          <%= slot.input :time_period, collection: %w[morning afternoon evening], as: :radio_buttons %>
-        <% end %>
 
         <p>Total: $<span id="total">0.00</span></p>
-        <%= f.submit 'Order Now!' %>
+        <%= f.submit 'Nothing selected yet😢', class: "disabled" %>
       <% end %>
 
     </div>
