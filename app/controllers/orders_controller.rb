@@ -24,6 +24,7 @@ class OrdersController < ApplicationController
   def sales
     @user = current_user
     @orders = @user.orders
+  end
 
   def edit
     @order = Order.find(params[:id])
