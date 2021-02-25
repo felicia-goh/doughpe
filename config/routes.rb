@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   get 'bakers', to: 'users#index'
   resources :products, only: [:new, :create,:edit, :update]
   resources :users, only:[:edit, :update]
+  get '/orders/:order_id/track', to: 'orders#track'
 end
