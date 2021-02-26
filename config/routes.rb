@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get '/orders/new', to: 'orders#new'
   post '/orders', to: 'orders#new'
   get '/sales', to: 'orders#sales'
+  get '/search', to: 'pages#search'
   resources :products, only: [:new, :create, :edit, :update, :destroy]
   resources :users, only:[:edit, :update]
   resources :orders, only: [:new, :edit, :update]
