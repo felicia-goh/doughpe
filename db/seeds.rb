@@ -45,8 +45,9 @@ end
     )
 
   qty = (1..3).to_a.sample
-  status = %w[paid delivered reviewed].sample
+  delivered = [true, false].sample
   user = User.where(baker: false).sample
+  time_period = %w[morning afternoon evening].sample
   order = Order.create!(
     user: user,
     slot: slot,

@@ -13,6 +13,7 @@ class ProductsController < ApplicationController
     if @product.save
       dates.each do |date|
         @slot = Slot.new(available_quantity: quantity, date: date)
+
         @slot.product = @product
         @slot.save
       end
