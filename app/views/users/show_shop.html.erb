@@ -15,11 +15,13 @@
       <% unless @products.empty? %>
         <% @products.each do |product| %>
 
-          <div class="card" style="text-align:center" data-product-id="<%= product.id %>" data-product-name="<%= product.name %>" data-product-price="<%= product.price %>" data-slots="<%= @products_hash[product.id].to_json %>" >
+          <div class="card" data-product-id="<%= product.id %>" data-product-name="<%= product.name %>" data-product-price="<%= product.price %>" data-slots="<%= @products_hash[product.id].to_json %>" >
             <% if product.photo.attached? %>
               <%= cl_image_tag product.photo.key, class: "card-img-top" %>
             <% else %>
-              <i class="fas fa-cookie-bite fa-10x m-3"></i>
+              <div style="text-align:center;">
+                <i class="fas fa-cookie-bite fa-10x m-3"></i>
+              </div>
             <% end %>
             <div class="card-body">
               <div class="card-title justify-content-between">
