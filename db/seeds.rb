@@ -41,7 +41,6 @@ end
   slot = Slot.create!(
     date: Date.today,
     available_quantity: (1..10).to_a.sample,
-    time_period: 'unselected',
     product: product
     )
 
@@ -53,9 +52,10 @@ end
     slot: slot,
     delivery_method: "delivery",
     delivery_address: user.address,
-    status: status,
+    delivered: false,
     quantity: qty,
-    total: slot.product.price * qty
+    subtotal: slot.product.price * qty,
+    time_period:  %w[morning afternoon evening unselected].sample
     )
 
   rating = (0..5).to_a.sample

@@ -51,8 +51,8 @@
         <div class="d-none" id="checkout">
           <%= f.association :slots do |slot| %>
             <%= slot.input :id, label: 'Date:', as: :select, collection: [] %>
-            <%= slot.input :time_period, collection: %w[morning afternoon evening], as: :radio_buttons %>
           <% end %>
+            <%= f.input :time_period, collection: %w[morning afternoon evening], as: :radio_buttons %>
           <div class="d-none" id="quantity_field">
             <%= f.input :quantity, as: :select, collection: [] %>
           </div>

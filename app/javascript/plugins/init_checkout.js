@@ -22,7 +22,7 @@ const initCheckout = () => {
 
 const updateSlotQuantity = (event) => {
   const quantityField = document.getElementById('order_quantity');
-  const quantity = event.currentTarget.innerText.slice(-1);
+  const quantity = event.currentTarget.innerText.split(': ')[1];
   let options = ``;
   for (let i = 1; i < (parseInt(quantity) + 1); i++ ) {
     options = options.concat(`<option value="${i}">${i}</option>`);
