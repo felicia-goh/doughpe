@@ -41,13 +41,13 @@ end
   slot = Slot.create!(
     date: Date.today,
     available_quantity: (1..10).to_a.sample,
-    time_period: 'unselected',
     product: product
     )
 
   qty = (1..3).to_a.sample
-  status = %w[paid delivered reviewed].sample
+  delivered = [true, false].sample
   user = User.where(baker: false).sample
+  time_period = %w[morning afternoon evening].sample
   order = Order.create!(
     user: user,
     slot: slot,
@@ -55,7 +55,7 @@ end
     delivery_address: user.address,
     status: status,
     quantity: qty,
-    total: slot.product.price * qty
+    subtotal: slot.product.price * qty
     )
 
   rating = (0..5).to_a.sample
