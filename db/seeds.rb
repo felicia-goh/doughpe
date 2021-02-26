@@ -56,7 +56,7 @@ end
     delivered: false,
     quantity: qty,
     subtotal: slot.product.price * qty,
-    time_period:  %w[morning afternoon evening unselected].sample
+    time_period:  %w[morning afternoon evening].sample
     )
 
   rating = (0..5).to_a.sample
