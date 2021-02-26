@@ -8,4 +8,5 @@ class Order < ApplicationRecord
   validates :delivery_address, presence: true
   validates :delivery_method, presence: true, inclusion: { in: %w[self-collection delivery] }
   validates :quantity, presence: true, numericality: { greater_than: 0 }
+  validates :time_period, inclusion: { in: %w[morning afternoon evening unselected] }
 end

@@ -53,9 +53,10 @@ end
     slot: slot,
     delivery_method: "delivery",
     delivery_address: user.address,
-    status: status,
+    delivered: false,
     quantity: qty,
-    subtotal: slot.product.price * qty
+    subtotal: slot.product.price * qty,
+    time_period:  %w[morning afternoon evening].sample
     )
 
   rating = (0..5).to_a.sample
