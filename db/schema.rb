@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_24_051845) do
+ActiveRecord::Schema.define(version: 2021_02_26_034100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,16 +36,28 @@ ActiveRecord::Schema.define(version: 2021_02_24_051845) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "baskets", force: :cascade do |t|
+    t.boolean "completed"
+    t.float "total"
+    t.bigint "users_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["users_id"], name: "index_baskets_on_users_id"
+  end
+
   create_table "orders", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "slot_id", null: false
     t.string "delivery_method"
     t.string "delivery_address"
-    t.string "status"
-    t.float "total"
+    t.float "subtotal"
     t.integer "quantity"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "delivered", default: false
+    t.string "time_period"
+    t.bigint "basket_id"
+    t.index ["basket_id"], name: "index_orders_on_basket_id"
     t.index ["slot_id"], name: "index_orders_on_slot_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
@@ -79,7 +91,6 @@ ActiveRecord::Schema.define(version: 2021_02_24_051845) do
   create_table "slots", force: :cascade do |t|
     t.date "date"
     t.integer "available_quantity"
-    t.string "time_period"
     t.bigint "product_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -104,6 +115,7 @@ ActiveRecord::Schema.define(version: 2021_02_24_051845) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "orders", "baskets"
   add_foreign_key "orders", "slots"
   add_foreign_key "orders", "users"
   add_foreign_key "products", "users"
