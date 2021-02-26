@@ -4,7 +4,11 @@ class UsersController < ApplicationController
   end
 
   def show_shop
-    @baker = User.find_by(username: params[:name])
+    if params[:format].nil?
+      @baker = User.find_by(username: params[:name])
+    else
+      @baker = User.find_by(username: "#{params[:name]}.#{params[:format]}")
+    end
     @products = Product.where(user: @baker)
     @products_hash = {}
     @products.each do |product|
@@ -17,7 +21,6 @@ class UsersController < ApplicationController
           }
         end
     end
-
     @order = Order.new
     @user = current_user
   end
