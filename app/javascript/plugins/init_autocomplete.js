@@ -4,6 +4,14 @@ const clearResults = (results) => {
   }
 };
 
+const fillInSearchForm = (event) => {
+  let value = event.currentTarget.innerText;
+  const searchTerm = document.querySelector('#search_query')
+  searchTerm.value = value;
+  const results = document.querySelector('#results');
+  clearResults(results);
+}
+
 const createList = (data) => {
   data.suggestions.forEach((result) => {
     if (result.username) {
@@ -16,14 +24,6 @@ const createList = (data) => {
     li.addEventListener('click', fillInSearchForm)
   })
 };
-
-const fillInSearchForm = (event) => {
-  let value = event.currentTarget.innerText;
-  const searchTerm = document.querySelector('#search_query')
-  searchTerm.value = value;
-  const results = document.querySelector('#results');
-  clearResults(results);
-}
 
 const autocomplete = () => {
   const searchTerm = document.querySelector('#search_query').value;
