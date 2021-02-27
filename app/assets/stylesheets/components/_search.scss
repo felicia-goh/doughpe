@@ -23,6 +23,7 @@
 
 .search-result-item {
   background-color: white;
+  border: 1px solid #E7E7E7;
   padding: 0.8rem;
   list-style: none;
 }
@@ -35,4 +36,5 @@
 
 #results {
   padding: 0;
+  position: absolute;
 }
