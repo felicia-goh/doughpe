@@ -1,29 +1,38 @@
 
 const initCheckout = () => {
 
-  document.querySelector('.disabled').disabled = true;
-  const cards = document.querySelectorAll('.card');
-  cards.forEach((card) => {
-    card.addEventListener('click', updateCheckoutForm)
-  })
-  const quantity = document.querySelector('.order_quantity')
-  quantity.addEventListener('click', updateQuantity)
-  quantity.addEventListener('keyup', updateQuantity)
+  if (document.querySelector('.shop') != null) {
 
-  const selfCollection = document.getElementById('order_delivery_method_self-collection')
-  selfCollection.addEventListener('click', updateSelfCollection)
-  const delivery = document.getElementById('order_delivery_method_delivery')
-  delivery.addEventListener('click', updateDelivery)
+    document.querySelector('.disabled').disabled = true;
 
-  const slots = document.getElementById('order_slots_id');
-  slots.addEventListener('change', updateSlotQuantity);
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((card) => {
+      card.addEventListener('click', updateCheckoutForm)
+    })
 
+    const quantity = document.querySelector('.order_quantity')
+    quantity.addEventListener('click', updateQuantity);
+    quantity.addEventListener('keyup', updateQuantity);
+    quantity.addEventListener('change', updateQuantity);
+
+    const selfCollection = document.getElementById('order_delivery_method_self-collection')
+    selfCollection.addEventListener('click', updateSelfCollection)
+    const delivery = document.getElementById('order_delivery_method_delivery')
+    delivery.addEventListener('click', updateDelivery)
+
+    const slots = document.getElementById('order_slots_id');
+    slots.addEventListener('change', updateSlotQuantity);
+
+    const submitButton = document.querySelector('.disabled')
+    submitButton.addEventListener('click', updateBasket);
+
+  }
 }
 
 const updateSlotQuantity = (event) => {
   const quantityField = document.getElementById('order_quantity');
   const quantity = event.currentTarget.innerText.split(': ')[1];
-  let options = ``;
+  let options = `<option value></option>`;
   for (let i = 1; i < (parseInt(quantity) + 1); i++ ) {
     options = options.concat(`<option value="${i}">${i}</option>`);
   }
@@ -77,8 +86,44 @@ const updateCheckoutForm = (event) => {
   document.getElementById('checkout').classList.remove('d-none');
   document.querySelector('.disabled').disabled = false;
   document.querySelector('.disabled').value = 'Order now!';
+}
 
 
+const updateBasket = (event) => {
+  event.preventDefault();
+  let slotId = document.querySelector('[name="order[slots][id]"]').value
+  let deliveryDate = document.getElementById('order_slots_id').innerText.split(' ')[0];
+  let basket = document.querySelector('.basket');
+  let buyNowButton = document.querySelector('.buynow')
+  buyNowButton.classList.remove('d-none');
+  let timeRadio = document.querySelectorAll('[name="order[time_period]"]')
+  let timePeriod = getTimePeriod(timeRadio)
+  let productName = document.querySelector('.product-name-placeholder').innerText
+  let itemQuantity = document.getElementById('order_quantity');
+  let deliveryMethodRadio = document.querySelectorAll('[name="order[delivery_method]"]');
+  let deliveryMethod = getDeliveryMethod(deliveryMethodRadio)
+  basket.insertAdjacentHTML('afterbegin', `<div class="d-flex justify-content-between"><h4> ${productName} </h4><h4>x${itemQuantity.value}</h4></div><p>Date: ${deliveryDate} | ${timePeriod}</p><p>${deliveryMethod}</p>`)
+
+}
+
+const getTimePeriod = (timeRadio) => {
+  for (let i = 0; i < timeRadio.length; i++) {
+    if (timeRadio[i].checked) {
+      let timePeriod = ''
+      timePeriod = timeRadio[i].value
+      return timePeriod;
+    }
+  }
+}
+
+const getDeliveryMethod = (deliveryMethodRadio) => {
+  for (let i = 0; i < deliveryMethodRadio.length; i++) {
+    if (deliveryMethodRadio[i].checked) {
+      let deliveryMethod = ''
+      deliveryMethod = deliveryMethodRadio[i].value
+      return deliveryMethod;
+    }
+  }
 }
 
 export { initCheckout }
