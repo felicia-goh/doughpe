@@ -9,7 +9,7 @@ class ProductsController < ApplicationController
     @product = Product.new(strong_params)
     @product.user = current_user
     quantity = strong_params_slots['available_quantity']
-    dates = strong_params_slots['date'].select { |d| d != '' }
+    dates = strong_params_slots['date'].split(",")
     if @product.save
       dates.each do |date|
         @slot = Slot.new(available_quantity: quantity, date: date)
@@ -63,6 +63,6 @@ class ProductsController < ApplicationController
   end
 
   def strong_params_slots
-    params.require(:slot).permit(:available_quantity, date: [])
+    params.require(:slot).permit(:available_quantity, :date)
   end
 end
