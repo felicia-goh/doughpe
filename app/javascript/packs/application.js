@@ -28,12 +28,12 @@ import flatpickr from "flatpickr";
 
 // Internal imports, e.g:
 // import { initSelect2 } from '../components/init_select2';
-import { initCheckout } from '../plugins/init_checkout.js';
+// import { initCheckout } from '../plugins/init_checkout.js';
 
 import { initFlatpickr } from '../plugins/init_flatpickr.js';
 
 document.addEventListener('turbolinks:load', () => {
   // Call your functions here, e.g:
-  initCheckout();
-  initiFlatpickr();
+  // initCheckout();
+  initFlatpickr();
 });
