@@ -25,6 +25,7 @@ class ProductsController < ApplicationController
 
   def edit
     @product = Product.find(params[:id])
+    @slots = Slot.where(product: @product)
   end
 
   def update

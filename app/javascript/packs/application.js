@@ -41,7 +41,7 @@ import { initFlatpickr } from '../plugins/init_flatpickr.js';
 
 document.addEventListener('turbolinks:load', () => {
   // Call your functions here, e.g:
-  // initCheckout();
+  initCheckout();
   initFlatpickr();
   initAutocomplete();
   initStarRating();

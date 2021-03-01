@@ -1,9 +1,9 @@
-<div class="container my-3">
+<div class="container my-3 shop">
   <div class="user-header p-3 my-3 d-flex align-items-center">
     <% if @baker.photo.attached? %>
-      <%= cl_image_tag @baker.photo.key, height: 150, width: 150, crop: :fill, class: "rounded-circle mr-3"%>
+    <%= cl_image_tag @baker.photo.key, height: 150, width: 150, crop: :fill, class: "rounded-circle mr-3"%>
     <% else %>
-      <i class="fas fa-user-circle fa-10x"></i>
+    <i class="fas fa-user-circle fa-10x"></i>
     <% end %>
     <div class="ml-3">
       <h2><%= @baker.username %></h2>
@@ -13,53 +13,56 @@
   <div class="shop_container">
     <div class="cards">
       <% unless @products.empty? %>
-        <% @products.each do |product| %>
+      <% @products.each do |product| %>
 
-          <div class="card" style="width: 18rem" data-product-id="<%= product.id %>" data-product-name="<%= product.name %>" data-product-price="<%= product.price %>" data-slots="<%= @products_hash[product.id].to_json %>" >
-            <% if product.photo.attached? %>
-              <%= cl_image_tag product.photo.key, class: "card-img-top" %>
-            <% else %>
-              <div style="text-align:center;">
-                <i class="fas fa-cookie-bite fa-10x m-3"></i>
-              </div>
-            <% end %>
-            <div class="card-body">
-              <div class="card-title justify-content-between">
-                <p><%= product.name %></p>
-                <p>$<%= number_with_precision(product.price, precision: 2) %></p>
-              </div>
-              <p class="card-text"><%= product.description %></p>
-            </div>
-            <% if @baker == current_user%>
-              <div class="d-flex justify-content-between p-3">
-                <%= link_to "Edit", edit_product_path(product), class: "btn btn-warning" %>
-                <%= link_to "Delete", product_path(product), method: :delete, class: "btn btn-danger" %>
-              </div>
-            <% end %>
-          </div>
+      <div class="card" style="width: 18rem" data-product-id="<%= product.id %>" data-product-name="<%= product.name %>" data-product-price="<%= product.price %>" data-slots="<%= @products_hash[product.id].to_json %>">
+        <% if product.photo.attached? %>
+        <%= cl_image_tag product.photo.key, class: "card-img-top" %>
+        <% else %>
+        <div style="text-align:center;">
+          <i class="fas fa-cookie-bite fa-10x m-3"></i>
+        </div>
         <% end %>
-      <% end %>
-      <%= link_to new_product_path do  %>
-      <div class="card" style="text-align:center">
-        <i class="fas fa-plus fa-10x m-3"></i>
-          <div class="card-body">
-            <div class="card-title">
-              <p>Add a new product</p>
-            </div>
+        <div class="card-body">
+          <div class="card-title justify-content-between">
+            <p><%= product.name %></p>
+            <p>$<%= number_with_precision(product.price, precision: 2) %></p>
           </div>
+          <p class="card-text"><%= product.description %></p>
+        </div>
+        <% if @baker == current_user %>
+        <div class="d-flex justify-content-between p-3">
+          <%= link_to "Edit", edit_product_path(product), class: "btn btn-warning" %>
+          <%= link_to "Delete", product_path(product), method: :delete, class: "btn btn-danger" %>
+        </div>
+        <% end %>
       </div>
       <% end %>
+      <% end %>
+      <% if @baker == current_user %>
+      <%= link_to new_product_path do  %>
+      <div class="card" style="text-align:center;">
+        <i class="fas fa-plus fa-10x m-3"></i>
+        <div class="card-body">
+          <div class="card-title">
+            <p>Add a new product</p>
+          </div>
+        </div>
+      </div>
+      <% end %>
+      <% end %>
     </div>
-    <div>
-      <%= simple_form_for @order do |f| %>
+    <div class="container sticky-top">
+      <div class="form">
+        <%= simple_form_for @order do |f| %>
         <h3 class="product-name-placeholder">Select an item!</h3>
         <div class="d-none" id="checkout">
           <%= f.association :slots do |slot| %>
-            <%= slot.input :id, label: 'Date:', as: :select, collection: [] %>
+          <%= slot.input :id, label: 'Date:', as: :select, collection: [] %>
           <% end %>
-            <%= f.input :time_period, collection: %w[morning afternoon evening], as: :radio_buttons %>
-          <div class="d-none" id="quantity_field">
-            <%= f.input :quantity, as: :select, collection: [] %>
+          <%= f.input :time_period, collection: %w[morning afternoon evening], as: :radio_buttons %>
+          <div class="d-none" id="quantity_field" class="d-inline">
+            <%= f.input :quantity, as: :select, collection: ["Choose a date first"] %>
           </div>
           <%= f.input :delivery_method, collection: %w[self-collection delivery], as: :radio_buttons %>
           <div class="d-none" id="delivery_form">
@@ -71,11 +74,38 @@
           </div>
         </div>
 
-        <p>Total: $<span id="total">0.00</span></p>
-        <%= f.submit 'Nothing selected yet😢', class: "disabled" %>
-      <% end %>
+        <p>Sub-Total: $<span id="sub-total">0.00</span></p>
+        <%= f.submit 'Nothing selected yet😢', class: "disabled btn btn-success", id: "add_to_cart" %>
+      </div>
+      <div class="basket mt-3" data-session-id="somethingyougetfromRails">
+        <% unless @basket.nil? %>
+        <% @basket.each do |item| %>
+        <ul class="list-group mb-3 z-depth-1 text-dark">
+          <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <div>
+              <h6 class="my-0"><%= item.slot.product.name  %></h6>
+              <small class="text-muted">@<%= item.slot.product.user.username %></small><br>
 
+              <small class="text-muted"><%= item.slot.date %> | <%= item.time_period %></small><br>
+              <small class="text-muted"><%= item.quantity %>x</small>
+
+            </div>
+            <span class="text-muted">$<%= number_with_precision(item.subtotal,precision: 2)%></span>
+          </li>
+
+        </ul>
+        <% end %>
+      </div>
+      <% end %>
+      <% end %>
+      <div class="<%= 'd-none' if @basket.nil? || @basket.empty? %> buynow">
+        <p>Total: $<span id="total"><%= @current_total %></span></p>
+        <% if @order_link.nil? %>
+        <a href="#" id="checkoutButton" class="btn btn-primary">Checkout Now!</a>
+        <% else %>
+        <%= link_to "Checkout Now!", edit_order_path(@order_link), class: "btn btn-primary" %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
-
