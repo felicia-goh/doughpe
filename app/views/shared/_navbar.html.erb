@@ -34,11 +34,11 @@
   <% if current_user.baker %>
   <%= link_to "View shop front", baker_path(current_user.username), class: "dropdown-item" %>
   <%= link_to "Add a product", new_product_path, class: "dropdown-item" %>
-  <%= link_to "See basket", edit_order_path(session[:order]["id"]), class: "dropdown-item" %>
+
   <%= link_to "See all orders", orders_path, class: "dropdown-item" %>
   <% else %>
   <% if !session[:order].nil? %>
-  <%= link_to "See basket", edit_order_path(session[:order]["id"]), class: "dropdown-item" %>
+
   <%= link_to "See all orders", orders_path, class: "dropdown-item" %>
   <% end %>
   <% end %>
