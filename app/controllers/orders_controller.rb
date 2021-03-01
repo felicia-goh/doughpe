@@ -12,9 +12,10 @@ class OrdersController < ApplicationController
 
     slot = Slot.find(params.require(:order).permit(slots: {})[:slots][:id])
     @order.slot = slot
-    @order.slot.time_period = params.require(:order).permit(slots: {})[:slots][:time_period]
+    # @order.slot.time_period = params.require(:order).permit(slots: {})[:slots][:time_period]
 
-    @order.total = @order.quantity * @product.price
+    @order.subtotal = @order.quantity * @product.price
+
     if @order.save
       slot.save
       redirect_to edit_order_path(@order)
@@ -43,8 +44,6 @@ class OrdersController < ApplicationController
     @order.user = @user
     @basket = Order.where(basket: @order.basket_id)
 
-
-
     if @order.update(order_params)
       render :success, locals: { order: @order, user: current_user, basket: @basket}
     else
@@ -57,10 +56,6 @@ class OrdersController < ApplicationController
   def order_params
     params.require(:order).permit(:quantity, :delivery_method, :delivery_address, :subtotal)
   end
-   def order_params_test
-    params.permit(:quantity, :delivery_method, :delivery_address, :subtotal)
-  end
-
   def strong_edit_params
     params.require(:user).permit(:name, :bio, :address)
   end

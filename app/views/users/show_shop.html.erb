@@ -16,8 +16,13 @@
         <% @products.each do |product| %>
 
           <div class="card" style="width: 18rem" data-product-id="<%= product.id %>" data-product-name="<%= product.name %>" data-product-price="<%= product.price %>" data-slots="<%= @products_hash[product.id].to_json %>" >
-
-            <%= cl_image_tag product.photo.key, class: "card-img-top" %>
+            <% if product.photo.attached? %>
+              <%= cl_image_tag product.photo.key, class: "card-img-top" %>
+            <% else %>
+              <div style="text-align:center;">
+                <i class="fas fa-cookie-bite fa-10x m-3"></i>
+              </div>
+            <% end %>
             <div class="card-body">
               <div class="card-title justify-content-between">
                 <p><%= product.name %></p>
@@ -49,8 +54,12 @@
       <%= simple_form_for @order do |f| %>
         <h3 class="product-name-placeholder">Select an item!</h3>
         <div class="d-none" id="checkout">
+          <%= f.association :slots do |slot| %>
+            <%= slot.input :id, label: 'Date:', as: :select, collection: [] %>
+          <% end %>
+            <%= f.input :time_period, collection: %w[morning afternoon evening], as: :radio_buttons %>
           <div class="d-none" id="quantity_field">
-            <%= f.input :quantity, input_html: { value: '1' } %>
+            <%= f.input :quantity, as: :select, collection: [] %>
           </div>
           <%= f.input :delivery_method, collection: %w[self-collection delivery], as: :radio_buttons %>
           <div class="d-none" id="delivery_form">
@@ -60,10 +69,6 @@
           </div>
           <div id="quantity_holder">
           </div>
-          <%= f.association :slots do |slot| %>
-            <%= slot.input :id, label: 'Date:', as: :select, collection: [] %>
-            <%= slot.input :time_period, collection: %w[morning afternoon evening], as: :radio_buttons %>
-          <% end %>
         </div>
 
         <p>Total: $<span id="total">0.00</span></p>

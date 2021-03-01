@@ -13,8 +13,8 @@ class ProductsController < ApplicationController
     if @product.save
       dates.each do |date|
         @slot = Slot.new(available_quantity: quantity, date: date)
+
         @slot.product = @product
-        @slot.time_period = 'unselected'
         @slot.save
       end
       redirect_to baker_path(current_user.username)
@@ -36,7 +36,6 @@ class ProductsController < ApplicationController
         dates.each do |date|
           @slot = Slot.new(available_quantity: quantity, date: date)
           @slot.product = @product
-          @slot.time_period = 'unselected'
           @slot.save
         end
       end
