@@ -15,42 +15,46 @@
 <% unless @query.nil? %>
   <div class="container mt-3">
     <h2>Showing results for "<%= @query %>"</h2>
-    <% unless @bakers_results.nil? %>
-      <h6><%= @bakers_results.length %> bakers</h6>
-      <% @bakers_results.each do |baker| %>
-        <%= link_to baker_path(baker.username) do %>
-          <div class="avatar-container">
-            <% if baker.photo.attached? %>
-              <%= cl_image_tag baker.photo.key, height: 150, width: 200, crop: :fill, class: "avatar-bordered-huge m-3" %>
-            <% else %>
-              <img class="avatar-bordered-huge m-3" src="https://source.unsplash.com/400x400/?bake" alt="product image">
+    <h6><%= @products_results.length %> products found</h6>
+    <div class="cards">
+      <% unless @products_results.nil? %>
+        <% @products_results.each do |product| %>
+          <div class="card m-3">
+            <%= link_to baker_path(product.user.username) do %>
+              <% if product.photo.attached? %>
+                <%= cl_image_tag product.photo.key, height: 150, width: 200, crop: :fill, class: "card-img-top" %>
+              <% else %>
+                <div style="text-align:center;">
+                  <i class="fas fa-cookie-bite fa-10x m-3"></i>
+                </div>
+              <% end %>
+              <div class="card-body">
+                <div class="card-title"><%= product.name %></div>
+              </div>
             <% end %>
-            <h6><%= baker.username %></h6>
           </div>
         <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
 
-  <% unless @products_results.nil? %>
-    <div class="container mt-3">
-      <h6><%= @products_results.length %> products</h6>
-      <% @products_results.each do |product| %>
-        <div class="card m-3">
-          <%= link_to baker_path(product.user.username) do %>
-            <% if product.photo.attached? %>
-              <%= cl_image_tag product.photo.key, height: 150, width: 200, crop: :fill, class: "card-img-top" %>
-            <% else %>
-              <div style="text-align:center;">
-                <i class="fas fa-cookie-bite fa-10x m-3"></i>
-              </div>
-            <% end %>
-            <div class="card-body">
-              <div class="card-title"><%= product.name %></div>
+  <div class="container mt-3">
+    <% unless @bakers_results.nil? %>
+      <h6><%= @bakers_results.length %> bakers found</h6>
+        <div class="cards">
+        <% @bakers_results.each do |baker| %>
+          <%= link_to baker_path(baker.username) do %>
+            <div class="avatar-container">
+              <% if baker.photo.attached? %>
+                <%= cl_image_tag baker.photo.key, height: 150, width: 200, crop: :fill, class: "avatar-bordered-huge m-3" %>
+              <% else %>
+                <img class="avatar-bordered-huge m-3" src="https://source.unsplash.com/400x400/?bake" alt="product image">
+              <% end %>
+              <h6><%= baker.username %></h6>
             </div>
           <% end %>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 <% end %>

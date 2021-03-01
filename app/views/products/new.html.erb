@@ -10,8 +10,8 @@
     <%= f.input :photo, as: :file %>
 
     <%= simple_fields_for :slot do |s| %>
-     <%= s.input :available_quantity %>
-     <%= s.input :date, as: :check_boxes, collection:[Date.today+1, Date.today+2, Date.today+3] %>
+      <%= s.input :date, as: :string, type: :text %>
+      <%= s.input :available_quantity %>
     <% end %>
     <%= f.button :submit, class: 'btn btn-primary' %>
   <% end %>

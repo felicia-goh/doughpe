@@ -5,6 +5,12 @@ class Product < ApplicationRecord
   validates :price, presence: true
   has_one_attached :photo
 
+  def selected_dates
+    slots.map do |slot|
+      slot.date
+    end
+  end
+
   include PgSearch::Model
   pg_search_scope :search_name_and_desc,
     against: [ :name, :description ],

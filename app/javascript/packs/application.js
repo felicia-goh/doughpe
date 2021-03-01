@@ -24,12 +24,10 @@ require("channels")
 
 // External imports
 import "bootstrap";
+import flatpickr from "flatpickr";
 import jquery from 'jquery';
-import "jquery-bar-rating";
+// import "jquery-bar-rating";
 window.$ = window.jquery = jquery;
-
-
-
 
 // Internal imports, e.g:
 // import { initSelect2 } from '../components/init_select2';
@@ -38,11 +36,13 @@ import { initEdit } from '../plugins/init_edit.js'
 import { initStarRating } from '../plugins/init_star_rating.js';
 import { initInsertLatest } from '../plugins/init_insert_latest.js';
 import { initAutocomplete } from '../plugins/init_autocomplete.js';
+import { initFlatpickr } from '../plugins/init_flatpickr.js';
+
 
 document.addEventListener('turbolinks:load', () => {
   // Call your functions here, e.g:
   initCheckout();
+  initFlatpickr();
   initAutocomplete();
   initStarRating();
-
 });

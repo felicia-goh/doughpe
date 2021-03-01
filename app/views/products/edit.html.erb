@@ -2,16 +2,17 @@
   <h1>Edit <%= @product.name %></h1>
 </div>
 
-<div class="container">
-  <%= cl_image_tag @product.photo.key %>
+<div class="container" id="edit-form" data-selected-dates='<%= @product.selected_dates.to_json %>' >
+  <% if @product.photo.attached? %>
+    <%= cl_image_tag @product.photo.key, width: 200, height: 200 %>
+  <% end %>
   <%= simple_form_for @product do |f| %>
     <%= f.input :name %>
     <%= f.input :price %>
     <%= f.input :description %>
-
-    <%= simple_fields_for :slot do |s| %>
-     <%= s.input :available_quantity %>
-     <%= s.input :date, as: :check_boxes, collection:[Date.today+1, Date.today+2, Date.today+3] %>
+    <%= simple_fields_for :slot do |slot| %>
+      <%= slot.input :date, as: :string, type: :text %>
+      <%= slot.input :available_quantity, input_html: { value: @product.slots[0].available_quantity } %>
     <% end %>
     <%= f.submit 'Update product', class: 'btn btn-primary', method: :patch %>
   <% end %>
