@@ -10,4 +10,15 @@ class User < ApplicationRecord
   has_many :baskets
   validates :username, presence: true, uniqueness: true
   has_one_attached :photo
+
+  include PgSearch::Model
+  pg_search_scope :search_name_and_product,
+    against: [ :username, :name ],
+    associated_against: {
+      products: [ :name, :description ]
+    },
+
+    using: {
+      tsearch: { prefix: true }
+    }
 end
