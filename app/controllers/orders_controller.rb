@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   def index
-    @orders = Order.where(user: current_user)
+    @orders = Order.where(user: current_user).order(updated_at: :desc)
   end
 
   def new
@@ -53,19 +53,20 @@ class OrdersController < ApplicationController
   def edit
     @order = Order.find(params[:id])
     @user = current_user
-    @slot = Slot.find(@order.slot_id)
-    @product = Product.find(@slot.product_id)
-    render :edit, locals: { slot: @slot }
+    @basket = Order.where(basket: @order.basket_id)
+    @completed = Order.where(basket: @order.basket_id).first.basket.completed
+    #@order.update(order_params_test)
+    render :edit
   end
 
   def update
     @order = Order.find(params[:id])
     @user = current_user
     @order.user = @user
-    @slot = Slot.find(@order.slot_id)
+    @basket = Order.where(basket: @order.basket_id)
 
-    if @order.update(strong_order_params)
-      render :payment, locals: { order: @order, user: current_user, slot: @slot }
+    if @order.update(order_params)
+      render :success, locals: { order: @order, user: current_user, basket: @basket}
     else
       render :edit
     end
@@ -74,15 +75,13 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:quantity, :delivery_method, :delivery_address, :time_period)
+    params.require(:order).permit(:quantity, :delivery_method, :delivery_address, :subtotal)
   end
-
   def strong_edit_params
     params.require(:user).permit(:name, :bio, :address)
   end
-
-  def strong_order_params
-    params.require(:order).permit(:delivery_method, :delivery_address, :quantity, :slot)
+  def review_params
+    params.require(:review).permit(:content, :rating)
   end
 
   def order_array_params

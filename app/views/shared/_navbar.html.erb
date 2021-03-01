@@ -1,7 +1,7 @@
 
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
   <%= link_to root_path, class: "navbar-brand" do %>
-  <%= image_tag "doughpe_logo.png"%>
+  <%= image_tag "doughpe_logo.png", height: 40, width: 80, crop: :fill%>
   <% end %>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,7 +10,7 @@
 
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-auto ">
       <% if user_signed_in? %>
       <li class="nav-item active">
         <%= link_to "Home", root_path, class: "nav-link" %>
@@ -21,7 +21,11 @@
       </li>
       <li class="nav-item dropdown">
         <% if current_user.photo.attached? %>
+
+<!--         <%= cl_image_tag current_user.photo.key,height: 50, width: 50, crop: :fill, class: "avatar-none dropdown-toggle ", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+ -->
           <%= cl_image_tag current_user.photo.key, class: "avatar-large dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+
         <% else %>
           <i class="fas fa-user-circle fa-3x avatar",  id = "navbarDropdown", data-toggle="dropdown", aria-haspopup = true, aria-expanded = false ></i>
         <% end %>

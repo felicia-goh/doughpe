@@ -1,1 +1,14 @@
 // Specific CSS for your home-page
+
+.product-size{
+  max-width: 250px;
+  max-height: 200px;
+
+
+}
+
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}

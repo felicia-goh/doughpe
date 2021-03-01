@@ -15,7 +15,7 @@
       <% unless @products.empty? %>
       <% @products.each do |product| %>
 
-      <div class="card" data-product-id="<%= product.id %>" data-product-name="<%= product.name %>" data-product-price="<%= product.price %>" data-slots="<%= @products_hash[product.id].to_json %>">
+      <div class="card" style="width: 18rem" data-product-id="<%= product.id %>" data-product-name="<%= product.name %>" data-product-price="<%= product.price %>" data-slots="<%= @products_hash[product.id].to_json %>">
         <% if product.photo.attached? %>
         <%= cl_image_tag product.photo.key, class: "card-img-top" %>
         <% else %>
@@ -92,9 +92,9 @@
       <div class="<%= 'd-none' if @basket.nil? || @basket.empty? %> buynow">
         <p>Total: $<span id="total"><%= @current_total %></span></p>
         <% if @order_link.nil? %>
-          <a href="#" id="checkoutButton">Checkout Now!</a>
+        <a href="#" id="checkoutButton">Checkout Now!</a>
         <% else %>
-          <%= link_to "Checkout Now!", edit_order_path(@order_link) %>
+        <%= link_to "Checkout Now!", edit_order_path(@order_link) %>
         <% end %>
       </div>
     </div>
