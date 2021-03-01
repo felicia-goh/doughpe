@@ -6,7 +6,6 @@
   display: flex;
   align-items: center;
   margin-bottom: auto
-
 }
 
 .card-text{
@@ -17,4 +16,12 @@
   display: flex;
   align-items: center;
   letter-spacing: -0.015em;
+}
+
+.card a {
+  color: black;
+}
+
+.card:hover {
+  cursor: pointer;
 }
