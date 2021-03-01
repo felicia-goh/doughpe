@@ -26,7 +26,7 @@ require("channels")
 import "bootstrap";
 import flatpickr from "flatpickr";
 import jquery from 'jquery';
-import "jquery-bar-rating";
+// import "jquery-bar-rating";
 window.$ = window.jquery = jquery;
 
 // Internal imports, e.g:
