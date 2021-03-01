@@ -13,7 +13,7 @@ class ChargesController < ApplicationController
 
   @orders.each do |order|
     total_qty += order.quantity
-    total += order.subtotal
+    # total += order.subtotal
   end
 
   if @basket.nil?
@@ -26,9 +26,9 @@ class ChargesController < ApplicationController
     line_items: [
       {
         name: 'Total',
-        amount: (total * 100).to_i,
+        amount: (@basket.total * 100).to_i,
         currency: 'sgd',
-        quantity: total_qty
+        quantity: 1
       }
     ],
     success_url: charges_success_url + '?session_id={CHECKOUT_SESSION_ID}',
