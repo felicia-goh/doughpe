@@ -10,10 +10,9 @@
     <%= f.input :name %>
     <%= f.input :price %>
     <%= f.input :description %>
-
-    <%= simple_fields_for @product.slot[0] do |s| %>
-      <%= s.input :date, as: :string, type: :text %>
-      <%= s.input :available_quantity %>
+    <%= simple_fields_for :slot do |slot| %>
+      <%= slot.input :date, as: :string, type: :text %>
+      <%= slot.input :available_quantity, input_html: { value: @product.slots[0].available_quantity } %>
     <% end %>
     <%= f.submit 'Update product', class: 'btn btn-primary', method: :patch %>
   <% end %>
