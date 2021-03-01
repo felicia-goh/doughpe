@@ -51,12 +51,15 @@ class ChargesController < ApplicationController
     # }
     render 'success', locals: { order: @orders, user: current_user, basket: @basket}
     Order.where(basket: @basket).first.basket.update(completed: true)
+    session[:basket_id] = nil
+
     @orders.each do |order|
       @slot = Slot.where(id: order.slot.id)
       available_quantity = @slot.first.available_quantity
       @slot.update(available_quantity: available_quantity - 1)
       order.update(delivered: true)
     end
+
   else
     @orders = @orders.where(delivered: true)
     render 'success', locals: { order: @orders, user: current_user, basket: @basket}

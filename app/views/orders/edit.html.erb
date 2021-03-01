@@ -159,6 +159,48 @@
         </h4>
 
         <!-- Cart -->
+        <% @basket.each do |item| %>
+        <%= link_to edit_order_path(item.id) do %>
+
+        <ul class="list-group mb-3 z-depth-1 text-dark">
+          <% if item.id == @order.id %>
+          <li class="list-group-item d-flex justify-content-between lh-condensed text-white bg-dark">
+            <% else %>
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <% end %>
+              <div>
+                <h6 class="my-0"><%= item.slot.product.name  %></h6>
+                <small class="text-muted">@<%= item.slot.product.user.username %></small><br>
+
+                <small class="text-muted"><%= item.slot.date %> | <%= item.time_period %></small><br>
+                <small class="text-muted"><%= item.quantity %>x</small>
+
+              </div>
+              <span class="text-muted">$<%= number_with_precision(item.subtotal,precision: 2)%></span>
+            </li>
+
+          </ul>
+          <% end %>
+          <% end %><!-- Cart -->
+          <hr>
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Total:</span>
+            <span>
+             <% sum = 0 %>
+             <% @basket.each do |item| %>
+             <%sum += item.subtotal  %>
+             <% end %>
+             $<%= number_with_precision(sum, precision: 2)%>
+           </span>
+         </h4>
+
+         <% else %>
+         <span class="badge badge-secondary badge-pill">
+          <%= 0 %>
+        </span>
+      </h4>
+
+      <!-- Cart -->
       </ul>
       <hr>
       <h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -170,7 +212,6 @@
      <% end %>
    </div>
    <!--Grid column-->
-
  </div>
  <!--Grid row-->
 

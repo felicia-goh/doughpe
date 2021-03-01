@@ -1,5 +1,5 @@
 .card {
-  max-height: 250px;
+  max-height: 400px;
 }
 
 .card-title{
@@ -9,7 +9,7 @@
   /* identical to box height */
   display: flex;
   align-items: center;
-  margin-bottom: auto
+  margin-bottom: auto;
 }
 
 .card-text{
@@ -18,8 +18,9 @@
   font-weight: 500;
   font-size: 14px;
   display: flex;
-  align-items: center;
   letter-spacing: -0.015em;
+  overflow: scroll;
+  height: 17vh;
 }
 
 .card a {
