@@ -23,6 +23,7 @@ class UsersController < ApplicationController
     end
     @order = Order.new
     @user = current_user
+
   end
 
   def edit

@@ -1,0 +1,12 @@
+<div class="modal-header">
+  <h5 class="modal-title"><%= @order.slot.product.name %> </h5>
+   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+ </div>
+ <div class="modal-body">
+   <%= simple_form_for [@order,@review], html: { class: "review_form" } do |f| %>
+    <%= f.input :content %>
+    <%= f.input :rating, collection: (1..5).to_a, label: "Rate your experience" , class: 'review_rating' %>
+    <%= f.submit "Send your review", class: "btn btn-primary" %>
+    <% end %>
+ </div>
+
