@@ -3,7 +3,7 @@ const initCheckout = () => {
 
   if (document.querySelector('.shop') != null) {
 
-    document.querySelector('.disabled').disabled = true;
+    document.getElementById('add_to_cart').disabled = true;
 
     const cards = document.querySelectorAll('.card');
     cards.forEach((card) => {
@@ -84,8 +84,9 @@ const updateCheckoutForm = (event) => {
   slots_list.innerHTML = options;
 
   document.getElementById('checkout').classList.remove('d-none');
-  document.querySelector('.disabled').disabled = false;
-  document.querySelector('.disabled').value = 'Order now!';
+  document.getElementById('add_to_cart').disabled = false;
+  document.getElementById('add_to_cart').classList.remove('disabled')
+  document.getElementById('add_to_cart').value = 'Order now!';
 }
 
 
@@ -134,8 +135,18 @@ const handleAJAXPost = (data) => {
     let itemQuantity = document.getElementById('order_quantity');
     let deliveryMethodRadio = document.querySelectorAll('[name="order[delivery_method]"]');
     let deliveryMethod = getDeliveryMethod(deliveryMethodRadio)
-    basket.insertAdjacentHTML('afterbegin', `<div class="d-flex justify-content-between"><h4> ${productName} </h4><h4>x${itemQuantity.value}</h4></div><p>Date: ${deliveryDate} | ${timePeriod}</p><p>${deliveryMethod}</p>`)
     let subtotal = document.getElementById('sub-total')
+    basket.insertAdjacentHTML('afterbegin', `<ul class="list-group mb-3 z-depth-1 text-dark">
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">${productName}</h6>
+                <small class="text-muted">@${window.location.pathname.split('/')[2]}</small><br>
+                <small class="text-muted">${deliveryDate} | ${timePeriod}</small><br>
+                <small class="text-muted">${itemQuantity.value}x</small>
+              </div>
+              <span class="text-muted">$${subtotal.innerText}</span>
+            </li>
+          </ul>`)
     let total = document.getElementById('total')
     total.innerText = parseFloat(total.innerText) + parseFloat(subtotal.innerText);
     createCheckoutLink(data.responseJSON.order.id)

@@ -53,38 +53,47 @@
       <% end %>
     </div>
     <div class="container sticky-top">
-      <%= simple_form_for @order do |f| %>
-      <h3 class="product-name-placeholder">Select an item!</h3>
-      <div class="d-none" id="checkout">
-        <%= f.association :slots do |slot| %>
-        <%= slot.input :id, label: 'Date:', as: :select, collection: [] %>
-        <% end %>
-        <%= f.input :time_period, collection: %w[morning afternoon evening], as: :radio_buttons %>
-        <div class="d-none" id="quantity_field" class="d-inline">
-          <%= f.input :quantity, as: :select, collection: ["Choose a date first"] %>
+      <div class="form">
+        <%= simple_form_for @order do |f| %>
+        <h3 class="product-name-placeholder">Select an item!</h3>
+        <div class="d-none" id="checkout">
+          <%= f.association :slots do |slot| %>
+          <%= slot.input :id, label: 'Date:', as: :select, collection: [] %>
+          <% end %>
+          <%= f.input :time_period, collection: %w[morning afternoon evening], as: :radio_buttons %>
+          <div class="d-none" id="quantity_field" class="d-inline">
+            <%= f.input :quantity, as: :select, collection: ["Choose a date first"] %>
+          </div>
+          <%= f.input :delivery_method, collection: %w[self-collection delivery], as: :radio_buttons %>
+          <div class="d-none" id="delivery_form">
+            <%= f.input :delivery_address %>
+          </div>
+          <div id="product">
+          </div>
+          <div id="quantity_holder">
+          </div>
         </div>
-        <%= f.input :delivery_method, collection: %w[self-collection delivery], as: :radio_buttons %>
-        <div class="d-none" id="delivery_form">
-          <%= f.input :delivery_address %>
-        </div>
-        <div id="product">
-        </div>
-        <div id="quantity_holder">
-        </div>
+
+        <p>Sub-Total: $<span id="sub-total">0.00</span></p>
+        <%= f.submit 'Nothing selected yet😢', class: "disabled btn btn-success", id: "add_to_cart" %>
       </div>
-
-      <p>Sub-Total: $<span id="sub-total">0.00</span></p>
-      <%= f.submit 'Nothing selected yet😢', class: "disabled" %>
-
-      <div class="basket" data-session-id="somethingyougetfromRails">
+      <div class="basket mt-3" data-session-id="somethingyougetfromRails">
         <% unless @basket.nil? %>
-        <%  @basket.each do |order| %>
-        <div class="d-flex justify-content-between">
-          <h4> <%= order.slot.product.name %> </h4>
-          <h4>x<%= order.quantity %></h4>
-        </div>
-        <p>Date: <%= order.slot.date %> | <%= order.time_period %></p>
-        <p><%= order.delivery_method %></p>
+        <% @basket.each do |item| %>
+        <ul class="list-group mb-3 z-depth-1 text-dark">
+          <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <div>
+              <h6 class="my-0"><%= item.slot.product.name  %></h6>
+              <small class="text-muted">@<%= item.slot.product.user.username %></small><br>
+
+              <small class="text-muted"><%= item.slot.date %> | <%= item.time_period %></small><br>
+              <small class="text-muted"><%= item.quantity %>x</small>
+
+            </div>
+            <span class="text-muted">$<%= number_with_precision(item.subtotal,precision: 2)%></span>
+          </li>
+
+        </ul>
         <% end %>
       </div>
       <% end %>
@@ -92,9 +101,9 @@
       <div class="<%= 'd-none' if @basket.nil? || @basket.empty? %> buynow">
         <p>Total: $<span id="total"><%= @current_total %></span></p>
         <% if @order_link.nil? %>
-        <a href="#" id="checkoutButton">Checkout Now!</a>
+        <a href="#" id="checkoutButton" class="btn btn-primary">Checkout Now!</a>
         <% else %>
-        <%= link_to "Checkout Now!", edit_order_path(@order_link) %>
+        <%= link_to "Checkout Now!", edit_order_path(@order_link), class: "btn btn-primary" %>
         <% end %>
       </div>
     </div>

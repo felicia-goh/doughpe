@@ -31,15 +31,21 @@ class OrdersController < ApplicationController
   end
 
   def js_create
+    if current_user.nil?
+      redirect_to new_user_session_path, notice: "Please Login/Signup to continue!"
+    end
     if session[:basket_id].nil?
-      @basket = Basket.create(user: current_user)
+      @basket = Basket.create(user: current_user, total: 0.00)
       session[:basket_id] = @basket.id
     end
     @order = Order.new(params.permit(order: {})[:order])
     @order.user = current_user
     @order.subtotal = Slot.find(@order.slot.id).product.price * @order.quantity
-    @order.basket = Basket.find(session[:basket_id])
+    @basket1 = Basket.find(session[:basket_id])
+    @order.basket = @basket1
     @order.save
+    @basket1.total += @order.subtotal
+    @basket1.save
     respond_to do |format|
       format.json { render json: { order: @order } }
     end
