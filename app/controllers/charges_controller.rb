@@ -51,6 +51,7 @@ class ChargesController < ApplicationController
     # }
     render 'success', locals: { order: @orders, user: current_user, basket: @basket}
     Order.where(basket: @basket).first.basket.update(completed: true)
+    session[:basket_id] = nil
   else
     @orders = @orders.where(delivered: true)
     render 'success', locals: { order: @orders, user: current_user, basket: @basket}

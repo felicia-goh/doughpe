@@ -22,12 +22,15 @@ class UsersController < ApplicationController
         end
     end
     @order = Order.new
-
-    @basket_id = Basket.find(session[:basket_id])
-    @basket = Order.where(basket: @basket_id).sort_by(&:id).reverse
-    @current_total = 0.to_f
-    @basket.each { |order| @current_total += order.subtotal }
-    @order_link = @basket.last
+    if session[:basket_id]
+      @basket_id = Basket.find(session[:basket_id])
+      @basket = Order.where(basket: @basket_id).sort_by(&:id).reverse
+      @current_total = 0.00
+      @basket.each { |order| @current_total += order.subtotal }
+      @order_link = @basket.last
+    else
+      @current_total = 0.00
+    end
   end
 
   def edit
