@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post '/orders', to: 'orders#new'
   get '/sales', to: 'orders#sales'
   get '/search', to: 'pages#search'
+  post '/add_to_basket', to: 'orders#js_create'
   get '/autocomplete', to: 'autocomplete#index'
   resources :products, only: [:new, :create, :edit, :update, :destroy]
   resources :users, only:[:edit, :update]

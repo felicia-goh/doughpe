@@ -72,7 +72,7 @@ end
     results_product = results.sample
     product = Product.create!(
       name: results_product[0],
-      price: rand * (5..10).to_a.sample,
+      price: (rand * (5..10).to_a.sample).round(2),
       description: results_product[1],
       user: baker
       )
