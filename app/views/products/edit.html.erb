@@ -11,7 +11,7 @@
     <%= f.input :price %>
     <%= f.input :description %>
 
-    <%= simple_fields_for :slots do |s| %>
+    <%= simple_fields_for @product.slot[0] do |s| %>
       <%= s.input :date, as: :string, type: :text %>
       <%= s.input :available_quantity %>
     <% end %>
