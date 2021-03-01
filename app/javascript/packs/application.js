@@ -28,10 +28,10 @@ import "bootstrap";
 // Internal imports, e.g:
 // import { initSelect2 } from '../components/init_select2';
 import { initAutocomplete } from '../plugins/init_autocomplete.js';
-// import { initCheckout } from '../plugins/init_checkout.js';
+import { initCheckout } from '../plugins/init_checkout.js';
 
 document.addEventListener('turbolinks:load', () => {
   // Call your functions here, e.g:
-  // initCheckout();
+  initCheckout();
   initAutocomplete();
 });

@@ -109,7 +109,7 @@ const updateBasket = (event) => {
     url: '/add_to_basket',
     type: 'post',
     data: { order: { slot_id: slotId, time_period: timePeriod, quantity: parseInt(itemQuantity.value), delivery_method: deliveryMethod, delivery_address: deliveryAddress }},
-    sucess: function (data) { },
+    success: function (data) { },
     error: function (data) { console.log("didnt work")},
     complete: function (data) { handleAJAXPost(data) }
   })
@@ -125,6 +125,7 @@ const updateBasket = (event) => {
 
 const handleAJAXPost = (data) => {
   if (data.responseJSON != 'undefined') {
+    console.log( data.responseJSON.order.id )
     let deliveryDate = document.getElementById('order_slots_id').innerText.split(' ')[0];
     let basket = document.querySelector('.basket');
     let timeRadio = document.querySelectorAll('[name="order[time_period]"]')
@@ -136,8 +137,17 @@ const handleAJAXPost = (data) => {
     basket.insertAdjacentHTML('afterbegin', `<div class="d-flex justify-content-between"><h4> ${productName} </h4><h4>x${itemQuantity.value}</h4></div><p>Date: ${deliveryDate} | ${timePeriod}</p><p>${deliveryMethod}</p>`)
     let subtotal = document.getElementById('sub-total')
     let total = document.getElementById('total')
-    total.innerText = parseFloat(total.innerText) + parseFloat(subtotal).innerText;
+    total.innerText = parseFloat(total.innerText) + parseFloat(subtotal.innerText);
+    createCheckoutLink(data.responseJSON.order.id)
+
   }
+}
+
+const createCheckoutLink = (orderId) => {
+  if ( document.getElementById('checkoutButton') != null ) {
+    document.getElementById('checkoutButton').href = `/orders/${orderId}/edit`
+  }
+
 }
 
 const getTimePeriod = (timeRadio) => {

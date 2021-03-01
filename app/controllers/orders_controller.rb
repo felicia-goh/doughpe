@@ -37,8 +37,9 @@ class OrdersController < ApplicationController
     end
     @order = Order.new(params.permit(order: {})[:order])
     @order.user = current_user
-    @order.subtotal = Slot.find(order[:order][:slot_id]).product.price * order[:order][:quantity].to_f
-    # @order.basket = Basket.find(session[:basket_id])
+    @order.subtotal = Slot.find(@order.slot.id).product.price * @order.quantity
+    @order.basket = Basket.find(session[:basket_id])
+    @order.save
     respond_to do |format|
       format.json { render json: { order: @order } }
     end
