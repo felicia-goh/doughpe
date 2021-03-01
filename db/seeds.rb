@@ -76,7 +76,6 @@ end
       description: results_product[1],
       user: baker
       )
-    index += 1
     product_photo = URI.open(results_product[2])
     product.photo.attach(io: product_photo, filename: "#{product.name}.png", content_type: 'image/png')
 
