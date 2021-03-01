@@ -19,7 +19,7 @@
         <div class="card-product-info-container d-flex justify-content-between align-items-center">
           <div class="card-product-infos">
             <h2><%= "#{order.quantity}x #{order.slot.product.name} by #{order.user.username}"%></h2>
-            <p>$<%= number_with_precision(order.total, precision: 2) %></p>
+            <p><%= number_with_precision(order.total, precision: 2)%></p>
           </div>
           <div>
             <%= link_to 'Mark as Complete', baker_path(order.slot.product.user.username), class: 'btn btn-primary' %>

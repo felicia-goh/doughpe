@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="row">
+    <!-- BEGIN INVOICE -->
+    <div class="container mt-3">
+      <div style="border-radius:150px; height:150px; width:150px; background: #1EDD88; margin:0 auto">
+        <i class="checkmark text-align-center">✓</i>
+      </div>
+    </div>
+
+
+    <div class="col-xs-12">
+      <div class="grid invoice">
+        <div class="grid-body">
+          <div class="invoice-title">
+            <div class="row">
+
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-xs-12">
+                <h2>order #10000<%= @basket.id %><br>
+                </div>
+              </div>
+            </div>
+            <hr>
+
+          </div>
+          <div class="row">
+
+            <div class="col-xs-6 text-right">
+              <address>
+                <strong>Order Date:</strong>
+                <%= @basket.created_at.to_date %>
+              </address>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h5>ORDER SUMMARY</h5>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <td class="text-left"><strong>Product name</strong></td>
+                    <td class="text-center"><strong>Delivery/Self-collection</strong></td>
+                    <td class="text-center"><strong>Time period</strong></td>
+                    <td class="text-center"><strong>Delivery method</strong></td>
+
+
+                    <td class="text-right"><strong>Total</strong></td>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @total = 0 %>
+                  <% @orders.each do |order|%>
+                  <% @total += (order.slot.product.price * order.quantity) %>
+                  <% end %>
+                  <% @orders.each do |order|%>
+                  <tr>
+                    <td class="text-right"><strong><%=order.slot.product.name%></strong></td>
+                    <% if order.delivery_method == 'delivery' %>
+                    <td class="text-center"><%=order.delivery_address%></td>
+                    <% else %>
+                    <td class="text-center"><%=order.slot.product.user.address%></td>
+                    <% end %>
+                    <td class="text-center"><%=order.time_period%></td>
+                    <td class="text-left"><%=order.delivery_method%></td>
+
+                    <td class="text-left">$<%=number_with_precision((order.slot.product.price * order.quantity),precision:2)%></td>
+
+                  </tr>
+                  <% end %>
+                  <tr>
+                    <td colspan="4"></td>
+
+                    <td class="text-left"><strong>$<%=number_with_precision(@total,precision:2)%></strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- END INVOICE -->
+  </div>
+</div>

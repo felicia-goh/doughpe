@@ -1,33 +1,70 @@
+
 <div class="container my-3">
   <div class="user-header p-3">
-    <h2>Welcome, <%= current_user.name %></h2>
+    <h3>Welcome, <%= current_user.name %></h3>
     <div class="d-flex">
-      <h4 class="pr-3"><%= @orders.length %> Order(s)</h4>
-      <h4 class="pl-3"><%= current_user.reviews.length %> Review(s)</h4>
+      <h4 class="pr-3"><%= pluralize @orders.length,"order" %></h4>
+      <% sum = 0 %>
+      <% @orders.each do |order| %>
+      <% if !order.review.nil? %>
+      <% sum += 1%>
+       <% end %>
+      <% end %>
+      <h4 class="pl-3"><%= pluralize sum, "review"  %></h4>
     </div>
   </div>
 </div>
 <div class="container">
   <h3>Your order history</h3>
-  <% unless @orders.empty? %>
-    <% @orders.each do |order| %>
-      <div class="card-product">
-        <% if order.slot.product.photo.attached? %>
-          <%= cl_image_tag order.slot.product.photo.key, class: "img" %>
-        <% else %>
-          <img class="img" src="https://www.biggerbolderbaking.com/wp-content/uploads/2018/03/No-Bake-Chocolate-Chip-Cookies1.jpg" alt="product image">
-        <% end %>
-        <div class="card-product-info-container d-flex justify-content-between align-items-center">
-          <div class="card-product-infos">
-            <h2><%= "#{order.quantity}x #{order.slot.product.name} from #{order.slot.product.user.username}"%></h2>
-            <p>$<%= number_with_precision(order.total, precision: 2) %></p>
-          </div>
-          <div>
-            <%= link_to 'Order Again', baker_path(order.slot.product.user.username), class: 'btn btn-primary' %>
-            <%= link_to 'Review Baker', '#', class: 'btn btn-secondary' %>
-          </div>
+ <% unless @orders.empty? %>
+ <% @orders.each do |order| %>
+ <% if order.delivered %>
+ <div class="card-product mb-3">
+  <% if order.slot.product.photo.attached? %>
+  <%= cl_image_tag order.slot.product.photo.key, class: "img" %>
+  <% else %>
+  <img class="img" src="https://www.biggerbolderbaking.com/wp-content/uploads/2018/03/No-Bake-Chocolate-Chip-Cookies1.jpg" alt="product image">
+  <% end %>
+  <div class="card-product-info-container d-flex justify-content-between align-items-center">
+    <div class="card-product-infos">
+      <h2><%= "#{order.quantity}x #{order.slot.product.name} from #{order.slot.product.user.username}"%></h2>
+      <p>$<%= number_with_precision(order.subtotal, precision: 2) %></p>
+    </div>
+    <div>
+      <%= link_to 'Order Again', baker_path(order.slot.product.user.username), class: 'btn btn-primary' %>
+      <%= link_to 'View Receipt', charges_success_path(order.basket.id), class: 'btn btn-primary' %>
+
+      <% if order.review.nil? %>
+      <%= link_to 'Review Baker',new_order_review_path(order), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-primary'}%>
+      <div id="modal-window" class="modal hide fade review_form" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog review_form" role="document">
+          <div class="modal-content review_form"></div>
         </div>
       </div>
-    <% end %>
+      <% else %>
+      <% order.review.rating.times do  %>
+      <i class="fa fa-star checked" aria-hidden="true"></i>
+      <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% else %>
+<div class="card-product mb-3">
+  <% if order.slot.product.photo.attached? %>
+  <%= cl_image_tag order.slot.product.photo.key, class: "img" %>
+  <% else %>
+  <img class="img" src="https://www.biggerbolderbaking.com/wp-content/uploads/2018/03/No-Bake-Chocolate-Chip-Cookies1.jpg" alt="product image">
   <% end %>
+  <div class="card-product-info-container d-flex justify-content-between align-items-center">
+    <div class="card-product-infos">
+      <h2><%= "#{order.quantity}x #{order.slot.product.name} from #{order.slot.product.user.username}"%></h2>
+      <p>$<%= number_with_precision(order.subtotal, precision: 2) %></p>
+    </div>
+    <span class="badge badge-light">not delivered</span>
+  </div>
+</div>
+<% end %>
+<% end %>
+<% end %>
 </div>

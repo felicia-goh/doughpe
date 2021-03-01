@@ -26,3 +26,32 @@
   max-width: 200px;
   border-radius: 16px;
 }
+
+.address-view {
+    text-align: left;
+    border-radius: 3px;
+    background-color: #fff;
+    border: solid 1px #d1d7d7;
+    padding: 16px;
+}
+
+
+.address-view__text{
+    width: 100%;
+    font-size: 16px;
+    line-height: 1.38;
+    color: #2e3333;
+}
+
+.font{
+  font-family: Nunito;
+}
+
+#editable{
+  display:none
+}
+
+.image-size {
+  max-width: 100px;
+  max-height: 100px;
+}

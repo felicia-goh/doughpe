@@ -10,4 +10,11 @@ class Product < ApplicationRecord
       slot.date
     end
   end
+
+  include PgSearch::Model
+  pg_search_scope :search_name_and_desc,
+    against: [ :name, :description ],
+    using: {
+      tsearch: { prefix: true }
+    }
 end
