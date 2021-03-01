@@ -4,7 +4,7 @@ class ChangeOrders < ActiveRecord::Migration[6.0]
     create_table :baskets do |t|
       t.boolean :completed
       t.float :total
-      t.references :users
+      t.references :user
       t.timestamps
     end
 

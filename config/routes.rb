@@ -10,5 +10,15 @@ Rails.application.routes.draw do
   get '/search', to: 'pages#search'
   resources :products, only: [:new, :create, :edit, :update, :destroy]
   resources :users, only:[:edit, :update]
-  resources :orders, only: [:new, :edit, :update]
+  resources :orders, only: [:new, :edit, :update, :index] do
+   resources :reviews, only: [:new, :create, :show]
+  end
+
+  scope 'baskets/:basket_id/charges' do
+    post 'create', to: 'charges#create', as: 'charges_create'
+    get 'cancel', to: 'charges#cancel', as: 'charges_cancel'
+    get 'success', to: 'charges#success', as: 'charges_success'
+  end
+
+
 end

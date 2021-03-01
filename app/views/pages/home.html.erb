@@ -23,7 +23,7 @@
           <%= link_to baker_path(baker.username) do %>
             <div class="avatar-container">
               <% if baker.photo.attached? %>
-                <%= cl_image_tag baker.photo.key, height: 150, width: 200, crop: :fill, class: "avatar-bordered-huge m-3" %>
+                <%= cl_image_tag baker.photo.key, class: "avatar-bordered-huge m-3" %>
               <% else %>
                 <img class="avatar-bordered-huge m-3" src="https://source.unsplash.com/400x400/?bake" alt="product image">
               <% end %>
@@ -81,12 +81,12 @@
   <h2>Popular bakes</h2>
   <div class="scrollmenu mb-3">
     <% @products.each do |product| %>
-      <div class="card m-3">
+      <div class="card m-3" style="width: 18rem;">
         <%= link_to baker_path(product.user.username) do %>
           <% if product.photo.attached? %>
-            <%= cl_image_tag product.photo.key, height: 150, width: 200, crop: :fill, class: "card-img-top" %>
+            <%= cl_image_tag product.photo.key, class: "card-img-top" %>
           <% else %>
-            <img class="card-img-top" src="https://www.biggerbolderbaking.com/wp-content/uploads/2018/03/No-Bake-Chocolate-Chip-Cookies1.jpg" alt="product image">
+            <img class="card-img-top" src="https://www.biggerbolderbaking.com/wp-content/uploads/2018/03/No-Bake-Chocolate-Chip-Cookies1.jpg" alt="product image" style="height: 0px, width:200px">
           <% end %>
           <div class="card-body">
             <div class="card-title"><%= product.name %></div>

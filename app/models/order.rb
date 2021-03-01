@@ -1,6 +1,7 @@
 class Order < ApplicationRecord
   belongs_to :user
   belongs_to :slot
+  belongs_to :basket
   has_one :review, dependent: :destroy
   has_one :purchase
 

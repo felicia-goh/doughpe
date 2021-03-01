@@ -41,27 +41,31 @@ end
   slot = Slot.create!(
     date: Date.today,
     available_quantity: (1..10).to_a.sample,
-    time_period: 'unselected',
-    product: product
+    product: Product.first
     )
 
   qty = (1..3).to_a.sample
-  status = %w[paid delivered reviewed].sample
+  delivered = [true, false].sample
   user = User.where(baker: false).sample
+  time_period = %w[morning afternoon evening].sample
   order = Order.create!(
     user: user,
     slot: slot,
     delivery_method: "delivery",
     delivery_address: user.address,
-    status: status,
+    delivered: false,
     quantity: qty,
-    total: slot.product.price * qty
+    subtotal: slot.product.price * qty,
+    time_period:  %w[morning afternoon evening].sample,
+    basket: basket
     )
 
   rating = (0..5).to_a.sample
   Review.create!(
     rating: rating,
     content: Faker::Lorem.sentence,
-    order: order
+    order: Order.first
     )
+
+  basket = Basket.create!(total: 15, completed: false, user: user)
 end

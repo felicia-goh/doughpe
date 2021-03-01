@@ -36,6 +36,9 @@ gem 'simple_form'
 gem 'devise'
 gem 'cloudinary', '~> 1.16.0'
 gem 'faker'
+gem 'popper_js', '~> 1.11', '>= 1.11.1'
+gem 'jquery-rails'
+gem 'stripe'
 
 group :development, :test do
   gem 'pry-byebug'
