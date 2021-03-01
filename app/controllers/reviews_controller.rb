@@ -7,10 +7,10 @@ class ReviewsController < ApplicationController
     @order = Order.find(params[:order_id])
     @review = Review.new
     @review.order_id = @order.id
-    #  respond_to do |format|
-    #   format.html { render 'new' }
-    #   format.js
-    # end
+     respond_to do |format|
+      format.html { render 'new' }
+      format.js
+    end
   end
 
   def create
