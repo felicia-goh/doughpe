@@ -77,6 +77,7 @@
         <p>Sub-Total: $<span id="sub-total">0.00</span></p>
         <%= f.submit 'Nothing selected yet😢', class: "disabled btn btn-success", id: "add_to_cart" %>
       </div>
+
       <div class="basket mt-3" data-session-id="somethingyougetfromRails">
         <% unless @basket.nil? %>
         <% @basket.each do |item| %>

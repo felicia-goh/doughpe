@@ -48,6 +48,7 @@ const updateSelfCollection = (event) => {
 const updateDelivery = (event) => {
   const delivery = document.getElementById('delivery_form')
   delivery.classList.remove('d-none');
+  document.getElementById('order_delivery_address').value = '';
 }
 
 const updateQuantity = (event) => {
