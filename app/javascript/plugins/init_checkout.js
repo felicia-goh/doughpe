@@ -42,7 +42,7 @@ const updateSlotQuantity = (event) => {
 const updateSelfCollection = (event) => {
   const delivery = document.getElementById('delivery_form')
   delivery.classList.add('d-none');
-  // delivery.insertAdjacentHTML('beforeend', '<input name="order[delivery_address]" type="hidden" value="self-collection" />')
+  document.getElementById('order_delivery_address').value = 'self-collection';
 }
 
 const updateDelivery = (event) => {
@@ -52,10 +52,10 @@ const updateDelivery = (event) => {
 
 const updateQuantity = (event) => {
   const q = document.getElementById('order_quantity');
-  const total = document.getElementById('total');
+  const subtotal = document.getElementById('sub-total');
   const price = document.getElementById('product_price');
   const calc = q.value * price.value ;
-  total.innerText = calc.toFixed(2);
+  subtotal.innerText = calc.toFixed(2);
 
 }
 
@@ -74,8 +74,8 @@ const updateCheckoutForm = (event) => {
 
   const q = document.getElementById('order_quantity');
   const calc = q.value * event.currentTarget.dataset.productPrice;
-  const total = document.getElementById('total');
-  total.innerText = calc.toFixed(2) ;
+  const subtotal = document.getElementById('sub-total');
+  subtotal.innerText = calc.toFixed(2) ;
 
   const slots_list = document.getElementById('order_slots_id');
   const slot_data = JSON.parse(event.currentTarget.dataset.slots);
@@ -91,19 +91,53 @@ const updateCheckoutForm = (event) => {
 
 const updateBasket = (event) => {
   event.preventDefault();
+  let buyNowButton = document.querySelector('.buynow')
+  buyNowButton.classList.remove('d-none');
+
   let slotId = document.querySelector('[name="order[slots][id]"]').value
   let deliveryDate = document.getElementById('order_slots_id').innerText.split(' ')[0];
   let basket = document.querySelector('.basket');
-  let buyNowButton = document.querySelector('.buynow')
-  buyNowButton.classList.remove('d-none');
   let timeRadio = document.querySelectorAll('[name="order[time_period]"]')
   let timePeriod = getTimePeriod(timeRadio)
   let productName = document.querySelector('.product-name-placeholder').innerText
   let itemQuantity = document.getElementById('order_quantity');
   let deliveryMethodRadio = document.querySelectorAll('[name="order[delivery_method]"]');
   let deliveryMethod = getDeliveryMethod(deliveryMethodRadio)
-  basket.insertAdjacentHTML('afterbegin', `<div class="d-flex justify-content-between"><h4> ${productName} </h4><h4>x${itemQuantity.value}</h4></div><p>Date: ${deliveryDate} | ${timePeriod}</p><p>${deliveryMethod}</p>`)
+  let deliveryAddress = document.getElementById('order_delivery_address').value;
 
+  $.ajax({
+    url: '/add_to_basket',
+    type: 'post',
+    data: { order: { slot_id: slotId, time_period: timePeriod, quantity: parseInt(itemQuantity.value), delivery_method: deliveryMethod, delivery_address: deliveryAddress }},
+    sucess: function (data) { },
+    error: function (data) { console.log("didnt work")},
+    complete: function (data) { handleAJAXPost(data) }
+  })
+  // basket.insertAdjacentHTML('afterbegin', `<div class="d-flex justify-content-between"><h4> ${productName} </h4><h4>x${itemQuantity.value}</h4></div><p>Date: ${deliveryDate} | ${timePeriod}</p><p>${deliveryMethod}</p>`)
+  // basket.insertAdjacentHTML('afterbegin', `<input type="hidden" name="orders[][order][slot_id]" value="${slotId}">`);
+  // basket.insertAdjacentHTML('afterbegin', `<input type="hidden" name="orders[][order][time_period]" value="${timePeriod}">`);
+  // basket.insertAdjacentHTML('afterbegin', `<input type="hidden" name="orders[][order][quantity]" value="${itemQuantity.value}">`);
+  // basket.insertAdjacentHTML('afterbegin', `<input type="hidden" name="orders[][order][delivery_method]" value="${deliveryMethod}">`);
+  // basket.insertAdjacentHTML('afterbegin', `<input type="hidden" name="orders[][order][delivery_address]" value="${deliveryAddress}">`);
+
+  const total = document.getElementById('total')
+}
+
+const handleAJAXPost = (data) => {
+  if (data.responseJSON != 'undefined') {
+    let deliveryDate = document.getElementById('order_slots_id').innerText.split(' ')[0];
+    let basket = document.querySelector('.basket');
+    let timeRadio = document.querySelectorAll('[name="order[time_period]"]')
+    let timePeriod = getTimePeriod(timeRadio)
+    let productName = document.querySelector('.product-name-placeholder').innerText
+    let itemQuantity = document.getElementById('order_quantity');
+    let deliveryMethodRadio = document.querySelectorAll('[name="order[delivery_method]"]');
+    let deliveryMethod = getDeliveryMethod(deliveryMethodRadio)
+    basket.insertAdjacentHTML('afterbegin', `<div class="d-flex justify-content-between"><h4> ${productName} </h4><h4>x${itemQuantity.value}</h4></div><p>Date: ${deliveryDate} | ${timePeriod}</p><p>${deliveryMethod}</p>`)
+    let subtotal = document.getElementById('sub-total')
+    let total = document.getElementById('total')
+    total.innerText = parseFloat(total.innerText) + parseFloat(subtotal).innerText;
+  }
 }
 
 const getTimePeriod = (timeRadio) => {

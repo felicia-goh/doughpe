@@ -73,16 +73,19 @@
         </div>
       </div>
 
-      <p>Total: $<span id="total">0.00</span></p>
+      <p>Sub-Total: $<span id="sub-total">0.00</span></p>
       <%= f.submit 'Nothing selected yet😢', class: "disabled" %>
-      <% end %>
 
       <div class="basket" data-session-id="somethingyougetfromRails">
-        <div class="btn btn-primary d-none buynow">
-          <input type="submit" value="Checkout Now!">
+        <%  @basket.each do |order| %>
+        <div class="d-flex justify-content-between"><h4> <%= order.product.name %> </h4><h4>x<%= order.quantity %>></h4></div><p>Date: <%= order.slot.date %> | <% order.time_period %>></p><p><%= order.delivery_method %></p>
+        <% end %>
+        <div class="d-none buynow">
+          <p>Total: $<span id="total"><%= @current_total %></span></p>
+          <input type="submit" name="commit" value="Checkout Now!">
         </div>
       </div>
+      <% end %>
     </div>
   </div>
 </div>
-

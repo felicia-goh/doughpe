@@ -22,7 +22,9 @@ class UsersController < ApplicationController
         end
     end
     @order = Order.new
-    @user = current_user
+    # @basket = Order.where(basket_id: session[:basket_id])
+    # @current_total = 0
+    # @basket.each do { |order| @current_total += order.subtotal }
   end
 
   def edit
