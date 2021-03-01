@@ -13,7 +13,7 @@ class ChargesController < ApplicationController
 
   @orders.each do |order|
     total_qty += order.quantity
-    total += order.subtotal * order.quantity
+    total += order.subtotal
   end
 
   if @basket.nil?
@@ -26,8 +26,8 @@ class ChargesController < ApplicationController
     line_items: [
       {
         name: 'Total',
-        amount: (total * 100).to_i / 10,
-        currency: 'SGD',
+        amount: (total * 100).to_i,
+        currency: 'sgd',
         quantity: total_qty
       }
     ],
@@ -52,6 +52,14 @@ class ChargesController < ApplicationController
     render 'success', locals: { order: @orders, user: current_user, basket: @basket}
     Order.where(basket: @basket).first.basket.update(completed: true)
     session[:basket_id] = nil
+
+    @orders.each do |order|
+      @slot = Slot.where(id: order.slot.id)
+      available_quantity = @slot.first.available_quantity
+      @slot.update(available_quantity: available_quantity - 1)
+      order.update(delivered: true)
+    end
+
   else
     @orders = @orders.where(delivered: true)
     render 'success', locals: { order: @orders, user: current_user, basket: @basket}

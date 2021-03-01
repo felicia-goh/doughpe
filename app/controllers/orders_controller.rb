@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   def index
-    @orders = Order.where(user: current_user).order(updated_at: :desc)
+    @orders = Order.where(user: current_user)
   end
 
   def new
@@ -58,6 +58,7 @@ class OrdersController < ApplicationController
 
   def edit
     @order = Order.find(params[:id])
+    session[:order] = @order
     @user = current_user
     @basket = Order.where(basket: @order.basket_id)
     @completed = Order.where(basket: @order.basket_id).first.basket.completed

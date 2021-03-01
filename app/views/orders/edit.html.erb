@@ -50,6 +50,7 @@
 
               </div>
               <!--Grid row-->
+
               <% if !(@order.delivery_method == 'delivery') %>
               <!--Delivery address-->
               <div class = "address-view">
@@ -77,38 +78,83 @@
               </div>
               <% end %>
 
-            <!--Grid row-->
-            <hr>
+              <!--Grid row-->
+              <hr>
+              <div class="d-block my-3">
+               <div>
+                <h4 >Payment</h4>
+              </div>
+            </div>
             <div class="d-block my-3">
-             <div>
-              <h4 >Payment</h4>
+              <div>
+                <%= link_to 'Payment', charges_create_path(basket_id: @order.basket.id), method: :post, class: 'btn btn-primary mb-3', remote: true %>
+              </div>
             </div>
-          </div>
-          <div class="d-block my-3">
-            <div>
-              <%= link_to 'Payment', charges_create_path(basket_id: @order.basket.id), method: :post, class: 'btn btn-primary mb-3', remote: true %>
-            </div>
-          </div>
 
-          <hr class="mb-4">
+            <hr class="mb-4">
+          </div>
+          <!--/.Card-->
         </div>
-        <!--/.Card-->
-      </div>
-      <!--Grid column-->
+        <!--Grid column-->
 
-      <!--Grid column-->
-      <div class="col-md-4 mb-4">
+        <!--Grid column-->
+        <div class="col-md-4 mb-4">
 
-        <!-- Heading -->
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
-          <span class="text-muted">Your cart</span>
-          <% if !@completed %>
-          <span class="badge badge-secondary badge-pill">
-            <% sum = 0 %>
-            <% @basket.each do |item| %>
-            <%sum += item.quantity  %>
+          <!-- Heading -->
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Your cart</span>
+            <% if !@completed %>
+            <span class="badge badge-secondary badge-pill">
+              <% sum = 0 %>
+              <% @basket.each do |item| %>
+              <%sum += item.quantity  %>
+              <% end %>
+              <%= sum %>
+            </span>
+          </h4>
+
+          <!-- Cart -->
+
+
+          <% @basket.each do |item| %>
+          <%= link_to edit_order_path(item.id) do %>
+
+          <ul class="list-group mb-3 z-depth-1 text-dark">
+            <% if item.id == @order.id %>
+            <li class="list-group-item d-flex justify-content-between lh-condensed text-white bg-dark">
+              <% else %>
+              <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <% end %>
+                <div>
+                  <h6 class="my-0"><%= item.slot.product.name  %></h6>
+                  <small class="text-muted">@<%= item.user.username%></small><br>
+
+                  <small class="text-muted">Delivery period: <%= item.time_period %></small><br>
+                  <small class="text-muted"><%= item.quantity %>x</small>
+
+                </div>
+                <span class="text-muted">$<%= number_with_precision(item.subtotal*item.quantity,precision: 2)%></span>
+              </li>
+
+            </ul>
+
             <% end %>
-            <%= sum %>
+            <% end %><!-- Cart -->
+            <hr>
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+              <span class="text-muted">Total:</span>
+              <span>
+               <% sum = 0 %>
+               <% @basket.each do |item| %>
+               <%sum += item.subtotal  %>
+               <% end %>
+               $<%= number_with_precision(sum, precision: 2)%>
+             </span>
+           </h4>
+
+           <% else %>
+           <span class="badge badge-secondary badge-pill">
+            <%= 0 %>
           </span>
         </h4>
 
@@ -155,20 +201,19 @@
       </h4>
 
       <!-- Cart -->
-    </ul>
-    <hr>
-    <h4 class="d-flex justify-content-between align-items-center mb-3">
-      <span class="text-muted">Total:</span>
-      <span>
-       $<%= 0%>
-     </span>
-   </h4>
-   <% end %>
+      </ul>
+      <hr>
+      <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-muted">Total:</span>
+        <span>
+         $<%= 0%>
+       </span>
+     </h4>
+     <% end %>
+   </div>
+   <!--Grid column-->
  </div>
- <!--Grid column-->
-
-</div>
-<!--Grid row-->
+ <!--Grid row-->
 
 </div>
 </main>

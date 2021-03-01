@@ -12,11 +12,11 @@ address_list = ['High Park Residences', 'Sky Habitat', 'Villa Marina',
 baker_bio_list = ['I live to bake', 'I could live on bread alone', 'Bake it til you make it',
   "I'm a pure-bread baker", "Please give me flours on Valentine's day!"]
 
-good_reviews_list = ['Absolutely yummy', "Second time ordering, I can't get enough!", "Tastes just like my nana's..."]
-average_reviews_list = ['Not too bad, but a little dense', 'It was good, but too sweet and overpowering',
-  'Quality seems a little inconsistent; was better the first time I ordered!']
-bad_reviews_list = ["I'm all about supporting local, but this was really not value for money",
-  "Looks nothing like the picture :(", "Won't be getting this again, unfortunately..."]
+# good_reviews_list = ['Absolutely yummy', "Second time ordering, I can't get enough!", "Tastes just like my nana's..."]
+# average_reviews_list = ['Not too bad, but a little dense', 'It was good, but too sweet and overpowering',
+#   'Quality seems a little inconsistent; was better the first time I ordered!']
+# bad_reviews_list = ["I'm all about supporting local, but this was really not value for money",
+#   "Looks nothing like the picture :(", "Won't be getting this again, unfortunately..."]
 
 bread_url = "https://www.allrecipes.com/search/?wt=bread"
 bread_html_file = open(bread_url).read
@@ -98,26 +98,26 @@ end
       slot: slot,
       delivery_method: "delivery",
       delivery_address: user.address,
-      delivered: false,
+      delivered: true,
       quantity: qty,
       subtotal: slot.product.price * qty,
       time_period:  %w[morning afternoon evening].sample,
       basket: basket
       )
 
-    rating = (0..5).to_a.sample
-    if rating > 3
-      content = good_reviews_list.sample
-    elsif rating > 1
-      content = average_reviews_list.sample
-    else
-      content = bad_reviews_list.sample
-    end
+    # rating = (0..5).to_a.sample
+    # if rating > 3
+    #   content = good_reviews_list.sample
+    # elsif rating > 1
+    #   content = average_reviews_list.sample
+    # else
+    #   content = bad_reviews_list.sample
+    # end
 
-    Review.create!(
-      rating: rating,
-      content: content,
-      order: order
-      )
+    # Review.create!(
+    #   rating: rating,
+    #   content: content,
+    #   order: order
+    #   )
   end
 end
