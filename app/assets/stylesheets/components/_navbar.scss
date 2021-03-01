@@ -1,6 +1,11 @@
 .navbar-lewagon {
   justify-content: space-between;
   background: white;
+  align-items: center;
+}
+
+.nav-row {
+  line-height: 2.5;
 }
 
 .navbar-lewagon .navbar-collapse {

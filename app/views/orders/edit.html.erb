@@ -106,8 +106,8 @@
               <% end %>
               <div>
                 <h6 class="my-0"><%= item.slot.product.name  %></h6>
-                <small class="text-muted">@<%= item.user.username%></small><br>
-                <small class="text-muted">Delivery period: <%= item.time_period %></small><br>
+                <small class="text-muted">@<%= item.slot.product.user.username%></small><br>
+                <small class="text-muted"><%= item.slot.date %> | <%= item.time_period %></small><br>
                 <small class="text-muted"><%= item.quantity %>x</small>
               </div>
               <span class="text-muted">$<%= number_with_precision(item.subtotal,precision: 2)%></span>
