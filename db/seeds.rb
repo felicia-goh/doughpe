@@ -26,11 +26,12 @@ cake_url = "https://www.allrecipes.com/search/?wt=cake"
 cake_html_file = open(cake_url).read
 cake_doc = Nokogiri::HTML(cake_html_file)
 
-results = bread_doc.search(".fixed-recipe-card").first(5).map do |result|
+results = []
+bread_doc.search(".fixed-recipe-card").first(5).map do |result|
   name = result.search(".fixed-recipe-card__title-link > span").text.strip
   description = result.search(".fixed-recipe-card__description").text.strip
   img = result.search(".fixed-recipe-card__img").attr('data-original-src').value
-  [name, description, img]
+  results << [name, description, img]
 end
 
 cake_doc.search(".fixed-recipe-card").first(5).map do |result|
