@@ -149,7 +149,7 @@ const handleAJAXPost = (data) => {
             </li>
           </ul>`)
     let total = document.getElementById('total')
-    total.innerText = parseFloat(total.innerText) + parseFloat(subtotal.innerText);
+    total.innerText = (parseFloat(total.innerText) + parseFloat(subtotal.innerText)).toFixed(2);
     createCheckoutLink(data.responseJSON.order.id)
 
   }

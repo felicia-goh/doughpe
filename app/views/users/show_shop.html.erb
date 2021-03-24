@@ -29,13 +29,13 @@
             <p>$<%= number_with_precision(product.price, precision: 2) %></p>
           </div>
           <p class="card-text"><%= product.description %></p>
+          <% if @baker == current_user %>
+          <div class="d-flex justify-content-between p-3">
+            <%= link_to "Edit", edit_product_path(product), class: "btn btn-warning" %>
+            <%= link_to "Delete", product_path(product), method: :delete, class: "btn btn-danger" %>
+          </div>
+          <% end %>
         </div>
-        <% if @baker == current_user %>
-        <div class="d-flex justify-content-between p-3">
-          <%= link_to "Edit", edit_product_path(product), class: "btn btn-warning" %>
-          <%= link_to "Delete", product_path(product), method: :delete, class: "btn btn-danger" %>
-        </div>
-        <% end %>
       </div>
       <% end %>
       <% end %>
@@ -91,7 +91,7 @@
               <small class="text-muted"><%= item.quantity %>x</small>
 
             </div>
-            <span class="text-muted">$<%= number_with_precision(item.subtotal,precision: 2)%></span>
+            <span class="text-muted">$<%= number_with_precision(item.subtotal, precision: 2)%></span>
           </li>
 
         </ul>
@@ -100,7 +100,7 @@
       <% end %>
       <% end %>
       <div class="<%= 'd-none' if @basket.nil? || @basket.empty? %> buynow">
-        <p>Total: $<span id="total"><%= @current_total %></span></p>
+        <p>Total: $<span id="total"><%= number_with_precision(@current_total, precision: 2) %></span></p>
         <% if @order_link.nil? %>
         <a href="#" id="checkoutButton" class="btn btn-primary">Checkout Now!</a>
         <% else %>
