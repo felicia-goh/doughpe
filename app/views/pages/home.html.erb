@@ -42,11 +42,11 @@
     <div class="card m-3">
       <%= link_to baker_path(product.user.username) do %>
       <% if product.photo.attached? %>
-      <%= cl_image_tag product.photo.key, height: 150, width: 200, crop: :fill, class: "card-img-top" %>
+        <%= cl_image_tag product.photo.key, height: 150, width: 200, crop: :fill, class: "card-img-top" %>
       <% else %>
-      <div style="text-align:center;">
-        <i class="fas fa-cookie-bite fa-10x m-3"></i>
-      </div>
+        <div class="text-center">
+          <i class="fas fa-cookie-bite fa-7x m-3"></i>
+        </div>
       <% end %>
       <div class="card-body">
         <div class="card-title"><%= product.name %></div>
