@@ -24,9 +24,9 @@
     <%= link_to baker_path(baker.username) do %>
     <div class="avatar-container">
       <% if baker.photo.attached? %>
-      <%= cl_image_tag baker.photo.key, height: 150, width: 200, crop: :fill, class: "avatar-bordered-huge mx-3 mt-3 mb-1" %>
+        <%= cl_image_tag baker.photo.key, height: 150, width: 200, crop: :fill, class: "avatar-bordered-huge mx-3 mt-3 mb-1" %>
       <% else %>
-      <img class="avatar-bordered-huge mx-3 mt-3 mb-1" src="https://source.unsplash.com/400x400/?bake" alt="product image">
+        <img class="avatar-bordered-huge mx-3 mt-3 mb-1" src="https://source.unsplash.com/400x400/?bake" alt="product image">
       <% end %>
       <h6><%= baker.username %></h6>
     </div>
